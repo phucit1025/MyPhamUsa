@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MyPhamUsa.Data;
+using MyPhamUsa.Services.Implementations;
+using MyPhamUsa.Services.Interfaces;
 using NJsonSchema;
 using NSwag;
 using NSwag.AspNetCore;
@@ -57,7 +59,9 @@ namespace MyPhamUsa
             #endregion
 
             #region Register Services
-
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IStorageService, StorageService>();
             #endregion
 
             #region JWT Config
@@ -130,16 +134,7 @@ namespace MyPhamUsa
             app.UseMvc();
 
             #region Init Users
-            InitIdentities(serviceProvider, "Candidate", "candidate1@gmail.com", "Zaq@123");
-            InitIdentities(serviceProvider, "Candidate", "candidate2@gmail.com", "Zaq@123");
-            InitIdentities(serviceProvider, "Candidate", "candidate3@gmail.com", "Zaq@123");
-
-            InitIdentities(serviceProvider, "Administrator", "admin1@gmail.com", "Zaq@123");
-            InitIdentities(serviceProvider, "Administrator", "admin2@gmail.com", "Zaq@123");
-
-            InitIdentities(serviceProvider, "Company", "company1@gmail.com", "Zaq@123");
-            InitIdentities(serviceProvider, "Company", "company2@gmail.com", "Zaq@123");
-            InitIdentities(serviceProvider, "Company", "company3@gmail.com", "Zaq@123");
+            InitIdentities(serviceProvider, "Admin", "admin1@gmail.com", "Zaq@123");
             #endregion
 
         }
