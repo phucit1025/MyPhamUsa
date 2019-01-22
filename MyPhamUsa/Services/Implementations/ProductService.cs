@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyPhamUsa.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyPhamUsa.Services.Implementations
 {
@@ -22,22 +24,70 @@ namespace MyPhamUsa.Services.Implementations
 
         public bool CreateProduct(ProductCreateViewModel newProduct)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var product = _mapper.Map<ProductCreateViewModel, Product>(newProduct);
+                _context.Add(product);
+                _context.SaveChanges();
+                var storageReceive = new Storage()
+                {
+                    Quantity = newProduct.ReceiveQuantity,
+                    ProductId = product.Id,
+                    Description = "Nhập kho sản phẩm mới."
+                };
+                _context.Add(storageReceive);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+
         }
 
         public bool DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            var product = _context.Products.Find(id);
+            if (product != null)
+            {
+                product.IsDeleted = true;
+                try
+                {
+                    _context.Update(product);
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (DbUpdateException)
+                {
+                    return false;
+                }
+            }
+            return false;
         }
 
         public ICollection<ProductViewModel> GetProducts()
         {
-            throw new NotImplementedException();
+            var products = _context.Products.Where(p => !p.IsDeleted).ToList();
+            var results = _mapper.Map<List<Product>, List<ProductViewModel>>(products);
+            return results;
         }
 
         public bool UpdateProduct(ProductViewModel newProduct)
         {
-            throw new NotImplementedException();
+            var product = _context.Products.Find(newProduct.Id);
+            var result = _mapper.Map<ProductViewModel, Product>(newProduct, product);
+            try
+            {
+                _context.Update(result);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+
         }
     }
 }

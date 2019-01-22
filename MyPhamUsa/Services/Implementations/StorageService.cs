@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyPhamUsa.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyPhamUsa.Services.Implementations
 {
@@ -45,14 +47,36 @@ namespace MyPhamUsa.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public bool Issue(int productId, int quantity, string description = "")
+        public bool Issue(IRViewModel issueModel)
         {
-            throw new NotImplementedException();
+            var issue = _mapper.Map<IRViewModel, Storage>(issueModel);
+            issue.IsIssued = true;
+            try
+            {
+                _context.Add(issue);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+
         }
 
-        public bool Receive(int productId, int quantity, string description = "")
+        public bool Receive(IRViewModel receiveModel)
         {
-            throw new NotImplementedException();
+            var issue = _mapper.Map<IRViewModel, Storage>(receiveModel);
+            try
+            {
+                _context.Add(issue);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
         }
     }
 }

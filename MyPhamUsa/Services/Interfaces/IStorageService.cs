@@ -13,7 +13,7 @@ namespace MyPhamUsa.Services.Interfaces
         ICollection<StorageViewModel> GetStorages(int productId);
         ICollection<StorageViewModel> GetStorages(int productId, bool isIssued);
         ICollection<StorageViewModel> GetStorages(int productId, bool isIssued, int orderId);
-        bool Issue(int productId, int quantity, string description = "");
-        bool Receive(int productId, int quantity, string description = "");
+        bool Issue(IRViewModel issueModel);
+        bool Receive(IRViewModel receiveModel);
     }
 }
