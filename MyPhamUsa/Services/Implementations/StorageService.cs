@@ -24,27 +24,35 @@ namespace MyPhamUsa.Services.Implementations
 
         public ICollection<StorageViewModel> GetStorages()
         {
-            throw new NotImplementedException();
+            var storages = _context.Storages.Where(s => !s.IsDeleted).ToList();
+            var results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
+            return results;
         }
 
         public ICollection<StorageViewModel> GetStorages(bool isIssued)
         {
-            throw new NotImplementedException();
+            return GetStorages().Where(s=>s.IsIssued==isIssued).ToList();
         }
 
         public ICollection<StorageViewModel> GetStorages(int productId)
         {
-            throw new NotImplementedException();
+            var storages = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted).ToList();
+            var results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
+            return results;
         }
 
         public ICollection<StorageViewModel> GetStorages(int productId, bool isIssued)
         {
-            throw new NotImplementedException();
+            var storages = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted && s.IsDeleted==isIssued).ToList();
+            var results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
+            return results;
         }
 
         public ICollection<StorageViewModel> GetStorages(int productId, bool isIssued, int orderId)
         {
-            throw new NotImplementedException();
+            var storages = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted && s.IsDeleted == isIssued && s.OrderId==orderId).ToList();
+            var results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
+            return results;
         }
 
         public bool Issue(IRViewModel issueModel)

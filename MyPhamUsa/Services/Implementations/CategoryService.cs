@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyPhamUsa.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyPhamUsa.Services.Implementations
 {
@@ -22,12 +24,28 @@ namespace MyPhamUsa.Services.Implementations
 
         public bool CreateCategory(CategoryCreateViewModel newCategory)
         {
-            throw new NotImplementedException();
+            var category = _mapper.Map<CategoryCreateViewModel, Category>(newCategory);
+            try
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
         }
 
         public bool DeleteCategory(int id)
         {
-            throw new NotImplementedException();
+            var category = _context.Categories.Find(id);
+            if (category != null)
+            {
+                DeepDelete(category);
+                return true;
+            }
+            return false;
         }
 
         public ICollection<CategoryViewModel> GetCategories()
@@ -38,6 +56,21 @@ namespace MyPhamUsa.Services.Implementations
         public bool UpdateCategory(CategoryViewModel newCategory)
         {
             throw new NotImplementedException();
+        }
+
+        private void DeepDelete(Category category)
+        {
+            if (category.Childs.Count != 0)
+            {
+                foreach (var child in category.Childs)
+                {
+
+                }
+            }
+            else
+            {
+
+            }
         }
     }
 }
