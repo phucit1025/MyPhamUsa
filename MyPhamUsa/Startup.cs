@@ -114,7 +114,7 @@ namespace MyPhamUsa
                 settings.GeneratorSettings.DefaultPropertyNameHandling =
                     PropertyNameHandling.CamelCase;
 
-                settings.GeneratorSettings.Title = "Casual Work API";
+                settings.GeneratorSettings.Title = "My Pham USA API";
 
                 settings.GeneratorSettings.OperationProcessors.Add(new OperationSecurityScopeProcessor("Bearer"));
 

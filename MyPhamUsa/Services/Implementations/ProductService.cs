@@ -73,6 +73,32 @@ namespace MyPhamUsa.Services.Implementations
             return results;
         }
 
+        public bool RenewQuantityIndex(int productId)
+        {
+            var receiveQuantity = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted && !s.IsIssued).Sum(c => c.Quantity);
+            var issueQuantity = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted && s.IsIssued).Sum(c => c.Quantity);
+            var availableQuantity = receiveQuantity - issueQuantity;
+            if (availableQuantity < 0)
+            {
+                return false;
+            }
+            else
+            {
+                var product = _context.Products.Find(productId);
+                product.QuantityIndex = availableQuantity;
+                try
+                {
+                    _context.Update(product);
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (DbUpdateException)
+                {
+                    return false;
+                }
+            }
+        }
+
         public bool UpdateProduct(ProductViewModel newProduct)
         {
             var product = _context.Products.Find(newProduct.Id);

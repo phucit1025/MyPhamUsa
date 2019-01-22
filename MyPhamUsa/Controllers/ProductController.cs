@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MyPhamUsa.Services.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyPhamUsa.Models.ViewModels;
+using MyPhamUsa.Services.Interfaces;
 
 namespace MyPhamUsa.Controllers
 {
