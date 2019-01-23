@@ -393,7 +393,7 @@ namespace MyPhamUsa.Migrations
             modelBuilder.Entity("MyPhamUsa.Models.Entities.Image", b =>
                 {
                     b.HasOne("MyPhamUsa.Models.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

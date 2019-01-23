@@ -37,7 +37,7 @@ namespace MyPhamUsa.Services.Implementations
                 #endregion
 
                 #region Image Processing
-                foreach(var base64 in newProduct.Images)
+                foreach(var base64 in newProduct.Base64Images)
                 {
                     string path = SaveImage(base64);
                     _context.Images.Add(new Image()

@@ -61,9 +61,20 @@ namespace MyPhamUsa.Services.Implementations
             issue.IsIssued = true;
             try
             {
-                _context.Add(issue);
-                _context.SaveChanges();
-                return true;
+                var product = _context.Products.Find(issueModel.ProductId);
+                if (product.QuantityIndex>=issueModel.Quantity)
+                {
+                    product.QuantityIndex -= issueModel.Quantity;
+                    _context.Add(issue);
+                    _context.Update(product);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
             catch (DbUpdateException)
             {
@@ -74,11 +85,15 @@ namespace MyPhamUsa.Services.Implementations
 
         public bool Receive(IRViewModel receiveModel)
         {
-            var issue = _mapper.Map<IRViewModel, Storage>(receiveModel);
+            var receive = _mapper.Map<IRViewModel, Storage>(receiveModel);
             try
             {
-                _context.Add(issue);
+                var product = _context.Products.Find(receiveModel.ProductId);
+                product.QuantityIndex += receiveModel.Quantity;
+                _context.Add(receive);
+                _context.Update(product);
                 _context.SaveChanges();
+
                 return true;
             }
             catch (DbUpdateException)

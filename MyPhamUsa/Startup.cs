@@ -62,6 +62,7 @@ namespace MyPhamUsa
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IStorageService, StorageService>();
+            services.AddScoped<IImageService, ImageService>();
             #endregion
 
             #region JWT Config

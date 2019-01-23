@@ -10,6 +10,7 @@ namespace MyPhamUsa.Models.Entities
         public Product()
         {
             ProductCategories = new HashSet<ProductCategory>();
+            Images = new HashSet<Image>();
         }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -18,5 +19,6 @@ namespace MyPhamUsa.Models.Entities
         public int QuantityIndex { get; set; }
 
         public virtual ICollection<ProductCategory> ProductCategories { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
     }
 }

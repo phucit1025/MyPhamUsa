@@ -10,7 +10,7 @@ using MyPhamUsa.Data;
 namespace MyPhamUsa.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190121155426_initialmigration")]
+    [Migration("20190123074702_initialmigration")]
     partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -395,7 +395,7 @@ namespace MyPhamUsa.Migrations
             modelBuilder.Entity("MyPhamUsa.Models.Entities.Image", b =>
                 {
                     b.HasOne("MyPhamUsa.Models.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

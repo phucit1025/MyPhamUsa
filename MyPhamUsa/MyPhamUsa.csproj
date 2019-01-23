@@ -8,6 +8,7 @@
     <Folder Include="wwwroot\" />
     <Folder Include="MappingProfiles\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,4 +29,7 @@
     <PackageReference Include="NSwag.AspNetCore" Version="11.20.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20190121155426_initialmigration.cs" />
+  </ItemGroup>
 </Project>

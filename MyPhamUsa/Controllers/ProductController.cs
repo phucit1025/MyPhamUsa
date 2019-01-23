@@ -35,5 +35,7 @@ namespace MyPhamUsa.Controllers
             var result = _productService.GetProducts();
             return StatusCode(200, result);
         }
+
+
     }
 }
