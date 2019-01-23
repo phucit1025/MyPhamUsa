@@ -13,5 +13,6 @@ namespace MyPhamUsa.Services.Interfaces
         bool UpdateProduct(ProductViewModel newProduct);
         bool DeleteProduct(int id);
         bool CreateProduct(ProductCreateViewModel newProduct);
+        bool RenewQuantityIndex(int productId);
     }
 }
