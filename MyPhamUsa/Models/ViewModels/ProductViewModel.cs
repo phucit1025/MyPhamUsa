@@ -24,5 +24,6 @@ namespace MyPhamUsa.Models.ViewModels
         public string Price { get; set; }
         public string SellPrice { get; set; }
         public int ReceiveQuantity { get; set; }
+        public List<string> Images { get; set; }
     }
 }

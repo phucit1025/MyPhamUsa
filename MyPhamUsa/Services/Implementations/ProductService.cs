@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyPhamUsa.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace MyPhamUsa.Services.Implementations
 {
@@ -15,20 +17,39 @@ namespace MyPhamUsa.Services.Implementations
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private IHttpContextAccessor _httpContext;
 
-        public ProductService(AppDbContext context, IMapper mapper)
+        public ProductService(AppDbContext context, IMapper mapper,IHttpContextAccessor httpContext)
         {
             _context = context;
             _mapper = mapper;
+            _httpContext = httpContext;
         }
 
         public bool CreateProduct(ProductCreateViewModel newProduct)
         {
             try
             {
+                #region Create Product
                 var product = _mapper.Map<ProductCreateViewModel, Product>(newProduct);
                 _context.Add(product);
                 _context.SaveChanges();
+                #endregion
+
+                #region Image Processing
+                foreach(var base64 in newProduct.Images)
+                {
+                    string path = SaveImage(base64);
+                    _context.Images.Add(new Image()
+                    {
+                        ProductId = product.Id,
+                        Path = path,
+                    });
+                }
+                _context.SaveChanges();
+                #endregion
+
+                #region Storage Processing
                 var storageReceive = new Storage()
                 {
                     Quantity = newProduct.ReceiveQuantity,
@@ -37,6 +58,8 @@ namespace MyPhamUsa.Services.Implementations
                 };
                 _context.Add(storageReceive);
                 _context.SaveChanges();
+                #endregion
+
                 return true;
             }
             catch (DbUpdateException)
@@ -87,7 +110,28 @@ namespace MyPhamUsa.Services.Implementations
             {
                 return false;
             }
-
         }
+
+        private string SaveImage(string base64)
+        {
+            string fileName;
+            string imagePath;
+            var request = _httpContext.HttpContext.Request;
+            var url = $"{request.Scheme}://{request.Host}/";
+            try
+            {
+                var base64array = Convert.FromBase64String(base64);
+                fileName = Guid.NewGuid().ToString() + ".jpg";
+                imagePath = Path.Combine($"wwwroot/images", fileName);
+                File.WriteAllBytes(imagePath, base64array);
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+            return $"{url}images/{fileName}";
+        }
+
     }
 }

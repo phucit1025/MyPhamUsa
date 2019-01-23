@@ -50,12 +50,26 @@ namespace MyPhamUsa.Services.Implementations
 
         public ICollection<CategoryViewModel> GetCategories()
         {
-            throw new NotImplementedException();
+            var categories = _context.Categories.Where(c => !c.IsDeleted).ToList();
+            var results = _mapper.Map<List<Category>, List<CategoryViewModel>>(categories);
+            return results;
         }
 
         public bool UpdateCategory(CategoryViewModel newCategory)
         {
-            throw new NotImplementedException();
+            var category = _context.Categories.Find(newCategory.Id);
+            var result = _mapper.Map<CategoryViewModel, Category>(newCategory, category);
+            try
+            {
+                _context.Update(result);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+
         }
 
         private void DeepDelete(Category category)
@@ -64,13 +78,12 @@ namespace MyPhamUsa.Services.Implementations
             {
                 foreach (var child in category.Childs)
                 {
-
+                    DeepDelete(child);
                 }
             }
-            else
-            {
-
-            }
+            category.IsDeleted = true;
+            _context.Update(category);
+            _context.SaveChanges();
         }
     }
 }
