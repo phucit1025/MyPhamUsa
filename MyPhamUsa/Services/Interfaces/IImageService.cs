@@ -8,5 +8,6 @@ namespace MyPhamUsa.Services.Interfaces
     {
         ICollection<ImageViewModel> GetImages(int productId);
         bool DeleteImage(int id);
+        bool UpdateImage(ImageUpdateViewModel updateModel);
     }
 }

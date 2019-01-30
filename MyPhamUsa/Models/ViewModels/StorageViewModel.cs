@@ -12,11 +12,8 @@ namespace MyPhamUsa.Models.ViewModels
         public string Description { get; set; }
         public bool IsIssued { get; set; }
         public ProductViewModel Product { get; set; }
-    }
-
-    public class StorageCreateViewModel
-    {
-
+        public string Date { get; set; }
+        public string Time { get; set; }
     }
 
     public class IRViewModel

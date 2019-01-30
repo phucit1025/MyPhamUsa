@@ -22,36 +22,67 @@ namespace MyPhamUsa.Services.Implementations
             _mapper = mapper;
         }
 
+        public StorageViewModel GetStorage(int id)
+        {
+            var storage = _context.Storages.Find(id);
+            if (storage.IsDeleted)
+            {
+                return null;
+            }
+            return _mapper.Map<Storage, StorageViewModel>(storage);
+        }
+
         public ICollection<StorageViewModel> GetStorages()
         {
-            var storages = _context.Storages.Where(s => !s.IsDeleted).ToList();
+            var storages = _context.Storages.Where(s => !s.IsDeleted).OrderByDescending(s => s.DateCreated).ToList();
             var results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
             return results;
         }
 
         public ICollection<StorageViewModel> GetStorages(bool isIssued)
         {
-            return GetStorages().Where(s=>s.IsIssued==isIssued).ToList();
+            return GetStorages().Where(s => s.IsIssued == isIssued).ToList();
         }
 
         public ICollection<StorageViewModel> GetStorages(int productId)
         {
-            var storages = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted).ToList();
+            var storages = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted).OrderByDescending(s => s.DateCreated).ToList();
             var results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
             return results;
         }
 
         public ICollection<StorageViewModel> GetStorages(int productId, bool isIssued)
         {
-            var storages = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted && s.IsDeleted==isIssued).ToList();
+            var storages = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted && s.IsDeleted == isIssued).OrderByDescending(s => s.DateCreated).ToList();
             var results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
             return results;
         }
 
         public ICollection<StorageViewModel> GetStorages(int productId, bool isIssued, int orderId)
         {
-            var storages = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted && s.IsDeleted == isIssued && s.OrderId==orderId).ToList();
+            var storages = _context.Storages.Where(s => s.ProductId == productId && !s.IsDeleted && s.IsDeleted == isIssued && s.OrderId == orderId).OrderByDescending(s => s.DateCreated).ToList();
             var results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
+            return results;
+        }
+
+        public ICollection<StorageViewModel> GetStorages(int? productId, int day, int month, int? year)
+        {
+            List<StorageViewModel> results = new List<StorageViewModel>();
+            IQueryable<Storage> storages = null;
+            if (productId.HasValue)
+            {
+                storages = _context.Storages.Where(c => c.ProductId == productId && !c.IsDeleted);
+                storages = storages.Where(s => s.DateCreated.Day == day && s.DateCreated.Month == month);
+            }
+            else
+            {
+                storages = _context.Storages.Where(s => s.DateCreated.Day == day && s.DateCreated.Month == month && !s.IsDeleted);
+            }
+            if (year.HasValue)
+            {
+                storages = storages.Where(s => s.DateCreated.Year == year);
+            }
+            results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages.OrderByDescending(s => s.DateCreated).ToList());
             return results;
         }
 
@@ -62,7 +93,7 @@ namespace MyPhamUsa.Services.Implementations
             try
             {
                 var product = _context.Products.Find(issueModel.ProductId);
-                if (product.QuantityIndex>=issueModel.Quantity)
+                if (product.QuantityIndex >= issueModel.Quantity)
                 {
                     product.QuantityIndex -= issueModel.Quantity;
                     _context.Add(issue);

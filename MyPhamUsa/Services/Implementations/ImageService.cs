@@ -19,7 +19,7 @@ namespace MyPhamUsa.Services.Implementations
         private readonly IHttpContextAccessor _httpContext;
         private readonly IMapper _mapper;
 
-        public ImageService(AppDbContext context, IHttpContextAccessor httpContext,IMapper mapper)
+        public ImageService(AppDbContext context, IHttpContextAccessor httpContext, IMapper mapper)
         {
             _context = context;
             _httpContext = httpContext;
@@ -49,6 +49,61 @@ namespace MyPhamUsa.Services.Implementations
             var images = _context.Images.Where(i => i.ProductId == productId && !i.IsDeleted).ToList();
             var results = _mapper.Map<List<Image>, List<ImageViewModel>>(images);
             return results;
+        }
+
+        public bool UpdateImage(ImageUpdateViewModel updateModel)
+        {
+            try
+            {
+                if (updateModel.DeleteImages.Count > 0)
+                {
+                    foreach (var deleteId in updateModel.DeleteImages)
+                    {
+                        DeleteImage(deleteId);
+                    }
+                }
+                if (updateModel.Base64Images.Count > 0)
+                {
+                    foreach (var base64 in updateModel.Base64Images)
+                    {
+                        string path = SaveImage(base64);
+                        _context.Images.Add(new Image()
+                        {
+                            ProductId = updateModel.ProductId,
+                            Path = path,
+                        });
+                    }
+                }
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+
+
+        }
+
+        private string SaveImage(string base64)
+        {
+            string fileName;
+            string imagePath;
+            var request = _httpContext.HttpContext.Request;
+            var url = $"{request.Scheme}://{request.Host}/";
+            try
+            {
+                var base64array = Convert.FromBase64String(base64);
+                fileName = Guid.NewGuid().ToString() + ".jpg";
+                imagePath = Path.Combine($"wwwroot/images", fileName);
+                File.WriteAllBytes(imagePath, base64array);
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+            return $"{url}images/{fileName}";
         }
     }
 }
