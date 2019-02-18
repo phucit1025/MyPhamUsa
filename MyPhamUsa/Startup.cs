@@ -139,6 +139,10 @@ namespace MyPhamUsa
             InitIdentities(serviceProvider, "Admin", "admin", "Zaq@123");
             #endregion
 
+            #region Init Staffs
+            InitIdentities(serviceProvider, "Staff", "staff", "Zaq@123");
+            #endregion
+
         }
 
         private void InitIdentities(IServiceProvider serviceProvider, string roleName, string email, string password)
