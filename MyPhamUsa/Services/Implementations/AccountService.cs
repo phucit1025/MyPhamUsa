@@ -46,10 +46,20 @@ namespace MyPhamUsa.Services.Implementations
         {
             var guid = _httpContextAccessor.HttpContext.User.GetGuid();
             var user = await _userManager.FindByIdAsync(guid);
-            if(await _userManager.CheckPasswordAsync(user, changePasswordViewModel.OldPassword))
+            if (await _userManager.CheckPasswordAsync(user, changePasswordViewModel.OldPassword))
             {
                 await _userManager.ChangePasswordAsync(user, changePasswordViewModel.OldPassword, changePasswordViewModel.NewPassword);
                 return true;
+            }
+            return false;
+        }
+        public async Task<bool> RemoveUser(string guid)
+        {
+            var user = _context.Users.Find(guid);
+            if (user != null)
+            {
+                var isSuccess = await _userManager.DeleteAsync(user);
+                return isSuccess.Succeeded;
             }
             return false;
         }
@@ -73,7 +83,7 @@ namespace MyPhamUsa.Services.Implementations
         {
             var currentGuid = _httpContextAccessor.HttpContext.User.GetGuid();
             var users = await _userManager.GetUsersInRoleAsync("Admin");
-            var results = _mapper.Map<List<IdentityUser>, List<AccountViewModel>>(users.Where(u=>!u.Id.Equals(currentGuid)).ToList());
+            var results = _mapper.Map<List<IdentityUser>, List<AccountViewModel>>(users.Where(u => !u.Id.Equals(currentGuid)).ToList());
             return results;
         }
 
@@ -112,10 +122,7 @@ namespace MyPhamUsa.Services.Implementations
             return null;
         }
 
-        public Task<bool> RemoveUser(string guid)
-        {
-            throw new NotImplementedException();
-        }
+
 
         private string BuildJwtToken(List<Claim> claims)
         {

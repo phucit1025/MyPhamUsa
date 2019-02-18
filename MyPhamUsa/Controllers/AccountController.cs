@@ -97,5 +97,19 @@ namespace MyPhamUsa.Controllers
             var guid = User.GetGuid();
             return StatusCode(200, guid);
         }
+        [HttpDelete]
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            if (await _accountService.RemoveUser(id))
+            {
+                return StatusCode(200);
+            }
+            else
+            {
+                return StatusCode(400);
+            }
+        }
+       
     }
 }
