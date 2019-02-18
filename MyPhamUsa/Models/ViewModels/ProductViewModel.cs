@@ -15,6 +15,16 @@ namespace MyPhamUsa.Models.ViewModels
         public int AvailableQuantity { get; set; }
         public List<string> ImagePaths { get; set; }
     }
+    public class ProductOfStaffViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int SellPrice { get; set; }
+        public int AvailableQuantity { get; set; }
+        public List<string> ImagePaths { get; set; }
+
+    }
 
     public class ProductCreateViewModel
     {

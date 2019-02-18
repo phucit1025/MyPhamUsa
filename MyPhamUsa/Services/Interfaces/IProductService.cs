@@ -10,6 +10,7 @@ namespace MyPhamUsa.Services.Interfaces
     public interface IProductService
     {
         ICollection<ProductViewModel> GetProducts();
+        ICollection<ProductOfStaffViewModel> GetProductsByStaff();
         bool UpdateProduct(ProductViewModel newProduct);
         bool DeleteProduct(int id);
         bool CreateProduct(ProductCreateViewModel newProduct);

@@ -95,6 +95,12 @@ namespace MyPhamUsa.Services.Implementations
             var results = _mapper.Map<List<Product>, List<ProductViewModel>>(products);
             return results;
         }
+        public ICollection<ProductOfStaffViewModel> GetProductsByStaff()
+        {
+            var products = _context.Products.Where(p => !p.IsDeleted).ToList();
+            var results = _mapper.Map<List<Product>, List<ProductOfStaffViewModel>>(products);
+            return results;
+        }
 
         public bool RenewQuantityIndex(int productId)
         {

@@ -32,12 +32,18 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetProducts()
         {
             var result = _productService.GetProducts();
             return StatusCode(200, result);
         }
-
+        [HttpGet]
+        public IActionResult GetProductsByStaff()
+        {
+            var result = _productService.GetProductsByStaff();
+            return StatusCode(200, result);
+        }
 
     }
 }
