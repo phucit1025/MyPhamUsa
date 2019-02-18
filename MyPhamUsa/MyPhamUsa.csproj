@@ -9,6 +9,7 @@
     <Folder Include="MappingProfiles\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,5 +32,8 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190121155426_initialmigration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Extensions\ClaimsExtension.json" />
   </ItemGroup>
 </Project>

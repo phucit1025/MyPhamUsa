@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPhamUsa.Models.ViewModels;
 
@@ -11,6 +12,8 @@ using MyPhamUsa.Services.Interfaces;
 namespace MyPhamUsa.Controllers
 {
     [Route("api/Image/[action]")]
+    [Authorize(Roles ="Admin")]
+    [ApiController]
     public class ImageController : Controller
     {
         private readonly IImageService _imageService;

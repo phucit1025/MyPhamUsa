@@ -8,10 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using MyPhamUsa.Services.Interfaces;
 using MyPhamUsa.Models.ViewModels;
 using NSwag.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyPhamUsa.Controllers
 {
     [Route("api/Storage/[action]")]
+    [Authorize(Roles = "Admin")]
+    [ApiController]
     public class StorageController : Controller
     {
         private readonly IStorageService _storageService;

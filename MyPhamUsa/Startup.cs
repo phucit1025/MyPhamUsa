@@ -63,6 +63,7 @@ namespace MyPhamUsa
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IStorageService, StorageService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IAccountService, AccountService>();
             #endregion
 
             #region JWT Config
@@ -135,7 +136,7 @@ namespace MyPhamUsa
             app.UseMvc();
 
             #region Init Users
-            InitIdentities(serviceProvider, "Admin", "admin1@gmail.com", "Zaq@123");
+            InitIdentities(serviceProvider, "Admin", "admin", "Zaq@123");
             #endregion
 
         }
