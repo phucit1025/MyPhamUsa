@@ -100,6 +100,13 @@ namespace MyPhamUsa.Services.Implementations
             return false;
         }
 
+        public ICollection<ClientProductViewModel> GetClientProducts()
+        {
+            var products = _context.Products.Where(p => !p.IsDeleted).OrderByDescending(p=>p.DateCreated).ToList();
+            var results = _mapper.Map<List<Product>, List<ClientProductViewModel>>(products);
+            return results;
+        }
+
         public ICollection<ProductViewModel> GetProducts()
         {
             var products = _context.Products.Where(p => !p.IsDeleted).ToList();
@@ -139,10 +146,10 @@ namespace MyPhamUsa.Services.Implementations
             }
         }
 
-        public bool UpdateProduct(ProductViewModel newProduct)
+        public bool UpdateProduct(ProductUpdateViewModel newProduct)
         {
             var product = _context.Products.Find(newProduct.Id);
-            var result = _mapper.Map<ProductViewModel, Product>(newProduct, product);
+            var result = _mapper.Map<ProductUpdateViewModel, Product>(newProduct, product);
             try
             {
                 _context.Update(result);

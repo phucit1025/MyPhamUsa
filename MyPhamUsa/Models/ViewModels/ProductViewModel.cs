@@ -15,6 +15,7 @@ namespace MyPhamUsa.Models.ViewModels
         public int AvailableQuantity { get; set; }
         public List<string> ImagePaths { get; set; }
     }
+
     public class ProductOfStaffViewModel
     {
         public int Id { get; set; }
@@ -35,5 +36,24 @@ namespace MyPhamUsa.Models.ViewModels
         public int SellPrice { get; set; }
         public int ReceiveQuantity { get; set; }
         public List<string> Base64Images { get; set; }
+    }
+
+    public class ClientProductViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Price { get; set; }
+        public int AvailableQuantity { get; set; }
+        public List<string> ImagePaths { get; set; }
+    }
+
+    public class ProductUpdateViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string OriginalPrice { get; set; }
+        public string SellPrice { get; set; }
     }
 }

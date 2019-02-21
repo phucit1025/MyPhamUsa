@@ -8,7 +8,7 @@ namespace MyPhamUsa.Controllers
     [Route("api/Product/[action]")]
     [ApiController]
     [Authorize(Roles = "Admin, Staff")]
-    public class ProductController : ControllerBase
+    public partial class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
 
@@ -38,11 +38,30 @@ namespace MyPhamUsa.Controllers
             var result = _productService.GetProducts();
             return StatusCode(200, result);
         }
+
         [HttpGet]
         public IActionResult GetProductsByStaff()
         {
             var result = _productService.GetProductsByStaff();
             return StatusCode(200, result);
+        }
+
+        [HttpDelete]
+        [Authorize(Roles ="Admin")]
+        public IActionResult DeleteProduct(int productId)
+        {
+            var result = _productService.DeleteProduct(productId);
+            if (result) return StatusCode(200);
+            return StatusCode(400);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult UpdateProduct(ProductUpdateViewModel newProduct)
+        {
+            var result = _productService.UpdateProduct(newProduct);
+            if (result) return StatusCode(200);
+            return StatusCode(400);
         }
 
     }

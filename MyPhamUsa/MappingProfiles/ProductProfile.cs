@@ -31,6 +31,18 @@ namespace MyPhamUsa.MappingProfiles
                 .ForMember(dm => dm.Price, map => map.MapFrom(vm => vm.Price.ToString()))
                 .ForMember(dm => dm.SellPrice, map => map.MapFrom(vm => vm.SellPrice.ToString()))
                 .ForMember(dm => dm.QuantityIndex, map => map.MapFrom(vm => vm.ReceiveQuantity));
+
+            CreateMap<Product, ClientProductViewModel>()
+                .ForMember(vm => vm.AvailableQuantity, map => map.MapFrom(dm => dm.QuantityIndex))
+                .ForMember(vm => vm.ImagePaths, map => map.MapFrom(dm => dm.Images.Where(i => !i.IsDeleted).Select(i => i.Path).ToList()));
+
+            CreateMap<Product, ProductUpdateViewModel>()
+                .ReverseMap()
+                .ForMember(dm=>dm.SellPrice,map=>map.MapFrom(vm=>vm.SellPrice))
+                .ForMember(dm=>dm.Price,map=>map.MapFrom(vm=>vm.OriginalPrice))
+                .ForMember(dm => dm.Id, map => map.Ignore())
+                .ForMember(dm => dm.DateUpdated, map => map.MapFrom(_=>DateTime.Now));
+
         }
     }
 }

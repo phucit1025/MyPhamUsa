@@ -11,9 +11,10 @@ namespace MyPhamUsa.Services.Interfaces
     {
         ICollection<ProductViewModel> GetProducts();
         ICollection<ProductOfStaffViewModel> GetProductsByStaff();
-        bool UpdateProduct(ProductViewModel newProduct);
+        bool UpdateProduct(ProductUpdateViewModel newProduct);
         bool DeleteProduct(int id);
         bool CreateProduct(ProductCreateViewModel newProduct);
         bool RenewQuantityIndex(int productId);
+        ICollection<ClientProductViewModel> GetClientProducts();
     }
 }
