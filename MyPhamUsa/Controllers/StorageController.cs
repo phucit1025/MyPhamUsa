@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace MyPhamUsa.Controllers
 {
     [Route("api/Storage/[action]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Staff")]
     [ApiController]
     public class StorageController : Controller
     {

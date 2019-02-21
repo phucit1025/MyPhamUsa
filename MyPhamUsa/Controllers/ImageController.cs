@@ -12,7 +12,7 @@ using MyPhamUsa.Services.Interfaces;
 namespace MyPhamUsa.Controllers
 {
     [Route("api/Image/[action]")]
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles ="Admin, Staff")]
     [ApiController]
     public class ImageController : Controller
     {

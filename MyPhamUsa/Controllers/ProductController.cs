@@ -7,7 +7,7 @@ namespace MyPhamUsa.Controllers
 {
     [Route("api/Product/[action]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Staff")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;

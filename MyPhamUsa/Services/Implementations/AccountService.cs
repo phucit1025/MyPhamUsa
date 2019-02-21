@@ -67,13 +67,17 @@ namespace MyPhamUsa.Services.Implementations
         public async Task<string> CreateUser(LoginViewModel loginViewModel)
         {
             var user = await _userManager.FindByNameAsync(loginViewModel.Username);
-            if (user != null)
+            if (user == null)
             {
                 var newUser = new IdentityUser() { Email = loginViewModel.Username, UserName = loginViewModel.Username };
                 var result = await _userManager.CreateAsync(newUser, loginViewModel.Password);
                 if (result.Succeeded)
                 {
-                    return newUser.Id;
+                    result = await _userManager.AddToRoleAsync(newUser, "Staff");
+                    if (result.Succeeded)
+                    {
+                        return newUser.Id;
+                    }
                 }
             }
             return "";
@@ -82,8 +86,8 @@ namespace MyPhamUsa.Services.Implementations
         public async Task<ICollection<AccountViewModel>> GetAccounts()
         {
             var currentGuid = _httpContextAccessor.HttpContext.User.GetGuid();
-            var users = await _userManager.GetUsersInRoleAsync("Admin");
-            var results = _mapper.Map<List<IdentityUser>, List<AccountViewModel>>(users.Where(u => !u.Id.Equals(currentGuid)).ToList());
+            var users = await _userManager.GetUsersInRoleAsync("Staff");
+            var results = _mapper.Map<List<IdentityUser>, List<AccountViewModel>>(users.ToList());
             return results;
         }
 

@@ -14,7 +14,7 @@ using MyPhamUsa.Extensions;
 namespace MyPhamUsa.Controllers
 {
     [Route("api/Account/[action]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Staff")]
     [ApiController]
     public class AccountController : Controller
     {
@@ -63,6 +63,7 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateUser([FromBody]LoginViewModel newAccount)
         {
             var newGuid = await _accountService.CreateUser(newAccount);
@@ -77,6 +78,7 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> GetUsers()
         {
             var results = await _accountService.GetAccounts();
@@ -97,6 +99,7 @@ namespace MyPhamUsa.Controllers
             var guid = User.GetGuid();
             return StatusCode(200, guid);
         }
+
         [HttpDelete]
         [Authorize(Roles ="Admin")]
         public async Task<IActionResult> DeleteUser(string id)

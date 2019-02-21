@@ -10,6 +10,7 @@ using MyPhamUsa.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Castle.Core.Internal;
 
 namespace MyPhamUsa.Services.Implementations
 {
@@ -28,8 +29,11 @@ namespace MyPhamUsa.Services.Implementations
 
         public bool CreateProduct(ProductCreateViewModel newProduct)
         {
+            var transaction = _context.Database.BeginTransaction();
+            string path = "";
             try
             {
+
                 #region Create Product
                 var product = _mapper.Map<ProductCreateViewModel, Product>(newProduct);
                 _context.Add(product);
@@ -39,7 +43,7 @@ namespace MyPhamUsa.Services.Implementations
                 #region Image Processing
                 foreach(var base64 in newProduct.Base64Images)
                 {
-                    string path = SaveImage(base64);
+                    path = SaveImage(base64);
                     _context.Images.Add(new Image()
                     {
                         ProductId = product.Id,
@@ -60,10 +64,17 @@ namespace MyPhamUsa.Services.Implementations
                 _context.SaveChanges();
                 #endregion
 
+                transaction.Commit();
+
                 return true;
             }
             catch (DbUpdateException)
             {
+                transaction.Rollback();
+                if (path.IsNullOrEmpty())
+                {
+                    File.Delete(path);
+                }
                 return false;
             }
 
