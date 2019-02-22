@@ -162,6 +162,17 @@ namespace MyPhamUsa.Services.Implementations
             }
         }
 
+        public ClientProductViewModel GetClientProduct(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product != null)
+            {
+                var result = _mapper.Map<Product, ClientProductViewModel>(product);
+                return result;
+            }
+            return null;
+        }
+
         private string SaveImage(string base64)
         {
             string fileName;

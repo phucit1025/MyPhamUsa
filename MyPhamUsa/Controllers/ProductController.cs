@@ -64,5 +64,13 @@ namespace MyPhamUsa.Controllers
             return StatusCode(400);
         }
 
+        [HttpGet]
+        public IActionResult GetProduct(int id)
+        {
+            var result = _productService.GetClientProduct(id);
+            if (result != null) return StatusCode(200, result);
+            return StatusCode(400);
+        }
+
     }
 }

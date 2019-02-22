@@ -16,5 +16,6 @@ namespace MyPhamUsa.Services.Interfaces
         bool CreateProduct(ProductCreateViewModel newProduct);
         bool RenewQuantityIndex(int productId);
         ICollection<ClientProductViewModel> GetClientProducts();
+        ClientProductViewModel GetClientProduct(int id);
     }
 }
