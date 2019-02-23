@@ -20,7 +20,7 @@ namespace MyPhamUsa.Services.Implementations
         private readonly IMapper _mapper;
         private IHttpContextAccessor _httpContext;
 
-        public ProductService(AppDbContext context, IMapper mapper,IHttpContextAccessor httpContext)
+        public ProductService(AppDbContext context, IMapper mapper, IHttpContextAccessor httpContext)
         {
             _context = context;
             _mapper = mapper;
@@ -41,7 +41,7 @@ namespace MyPhamUsa.Services.Implementations
                 #endregion
 
                 #region Image Processing
-                foreach(var base64 in newProduct.Base64Images)
+                foreach (var base64 in newProduct.Base64Images)
                 {
                     path = SaveImage(base64);
                     _context.Images.Add(new Image()
@@ -102,7 +102,7 @@ namespace MyPhamUsa.Services.Implementations
 
         public ICollection<ClientProductViewModel> GetClientProducts()
         {
-            var products = _context.Products.Where(p => !p.IsDeleted).OrderByDescending(p=>p.DateCreated).ToList();
+            var products = _context.Products.Where(p => !p.IsDeleted).OrderByDescending(p => p.DateCreated).ToList();
             var results = _mapper.Map<List<Product>, List<ClientProductViewModel>>(products);
             return results;
         }
@@ -194,5 +194,31 @@ namespace MyPhamUsa.Services.Implementations
             return $"{url}images/{fileName}";
         }
 
+        public bool UpdateProduct(ProductStaffUpdateViewModel newProduct)
+        {
+            var oldProduct = _context.Products.Find(newProduct.Id);
+            var product = _mapper.Map<ProductStaffUpdateViewModel, Product>(newProduct, oldProduct);
+            try
+            {
+                _context.Update(product);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+        }
+
+        public ProductViewModel GetProduct(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product != null)
+            {
+                var result = _mapper.Map<Product, ProductViewModel>(product);
+                return result;
+            }
+            return null;
+        }
     }
 }

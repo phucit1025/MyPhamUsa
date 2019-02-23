@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using MyPhamUsa.Models.ViewModels;
 namespace MyPhamUsa.MappingProfiles
 {
-    public class AccountProfile:Profile
+    public class AccountProfile : Profile
     {
         public AccountProfile()
         {

@@ -11,7 +11,9 @@ namespace MyPhamUsa.MappingProfiles
         {
             CreateMap<Product, ProductViewModel>()
                 .ForMember(vm => vm.AvailableQuantity, map => map.MapFrom(dm => dm.QuantityIndex))
-                .ForMember(vm=>vm.ImagePaths,map=>map.MapFrom(dm=>dm.Images.Where(i=>!i.IsDeleted).Select(i=>i.Path).ToList()))
+                .ForMember(vm => vm.ImagePaths, map => map.MapFrom(dm => dm.Images.Where(i => !i.IsDeleted).Select(i => i.Path).ToList()))
+                .ForMember(vm => vm.Price, map => map.MapFrom(dm => dm.Price))
+                .ForMember(vm => vm.SellPrice, map => map.MapFrom(dm => dm.SellPrice))
                 .ReverseMap()
                 .ForMember(dm => dm.Id, map => map.Ignore())
                 .ForMember(dm => dm.DateUpdated, map => map.MapFrom(vm => DateTime.Now));
@@ -38,11 +40,14 @@ namespace MyPhamUsa.MappingProfiles
 
             CreateMap<Product, ProductUpdateViewModel>()
                 .ReverseMap()
-                .ForMember(dm=>dm.SellPrice,map=>map.MapFrom(vm=>vm.SellPrice))
-                .ForMember(dm=>dm.Price,map=>map.MapFrom(vm=>vm.OriginalPrice))
+                .ForMember(dm => dm.SellPrice, map => map.MapFrom(vm => vm.SellPrice))
+                .ForMember(dm => dm.Price, map => map.MapFrom(vm => vm.OriginalPrice))
                 .ForMember(dm => dm.Id, map => map.Ignore())
-                .ForMember(dm => dm.DateUpdated, map => map.MapFrom(_=>DateTime.Now));
+                .ForMember(dm => dm.DateUpdated, map => map.MapFrom(_ => DateTime.Now));
 
+            CreateMap<ProductStaffUpdateViewModel, Product>()
+                .ForMember(dm => dm.Id, map => map.Ignore())
+                .ForMember(dm => dm.DateUpdated, map => map.MapFrom(_ => DateTime.Now));
         }
     }
 }

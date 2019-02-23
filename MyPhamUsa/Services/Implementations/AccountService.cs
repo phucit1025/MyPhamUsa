@@ -135,12 +135,39 @@ namespace MyPhamUsa.Services.Implementations
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
               _configuration["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(0),
+              expires: DateTime.Now.AddMinutes(180),
               signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public async Task<object> LoginV2(LoginViewModel loginViewModel)
+        {
+            var user = await _userManager.FindByEmailAsync(loginViewModel.Username);
+            if (user != null)
+            {
+                var hasRightPassword = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
 
+                if (hasRightPassword)
+                {
+                    var roleList = await _userManager.GetRolesAsync(user);
+                    var userRole = roleList.FirstOrDefault();
+
+                    #region Set Claims
+                    var claims = new List<Claim>() {
+                        new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                        new Claim(new ClaimsIdentityOptions().UserIdClaimType, user.Id),
+                    };
+                    claims.Add(new Claim(ClaimTypes.Role, userRole));
+                    claims.Add(new Claim(new ClaimsIdentityOptions().SecurityStampClaimType, await _userManager.GetSecurityStampAsync(user)));
+                    #endregion
+
+                    string token = BuildJwtToken(claims);
+                    return new { token = token, role = userRole };
+                }
+            }
+
+            return null;
+        }
     }
 }

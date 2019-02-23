@@ -8,6 +8,7 @@ namespace MyPhamUsa.Services.Interfaces
     public interface IAccountService
     {
         Task<string> Login(LoginViewModel loginViewModel);
+        Task<object> LoginV2(LoginViewModel loginViewModel);
         Task<String> GetUserInfo();
         Task<ICollection<AccountViewModel>> GetAccounts();
         Task<string> CreateUser(LoginViewModel loginViewModel);

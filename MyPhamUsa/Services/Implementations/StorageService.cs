@@ -34,7 +34,7 @@ namespace MyPhamUsa.Services.Implementations
 
         public ICollection<StorageViewModel> GetStorages()
         {
-            var storages = _context.Storages.Where(s => !s.IsDeleted).OrderByDescending(s => s.DateCreated).ToList();
+            var storages = _context.Storages.Where(s => !s.IsDeleted && !s.Product.IsDeleted).OrderByDescending(s => s.DateCreated).ToList();
             var results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
             return results;
         }

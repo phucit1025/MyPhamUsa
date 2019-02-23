@@ -18,6 +18,7 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateProduct([FromBody] ProductCreateViewModel newProduct)
         {
             var result = _productService.CreateProduct(newProduct);
@@ -39,15 +40,8 @@ namespace MyPhamUsa.Controllers
             return StatusCode(200, result);
         }
 
-        [HttpGet]
-        public IActionResult GetProductsByStaff()
-        {
-            var result = _productService.GetProductsByStaff();
-            return StatusCode(200, result);
-        }
-
         [HttpDelete]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteProduct(int productId)
         {
             var result = _productService.DeleteProduct(productId);
@@ -67,10 +61,27 @@ namespace MyPhamUsa.Controllers
         [HttpGet]
         public IActionResult GetProduct(int id)
         {
-            var result = _productService.GetClientProduct(id);
+            var result = _productService.GetProduct(id);
             if (result != null) return StatusCode(200, result);
             return StatusCode(400);
         }
+
+        #region Staff
+        [HttpGet]
+        public IActionResult GetProductsByStaff()
+        {
+            var result = _productService.GetProductsByStaff();
+            return StatusCode(200, result);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Staff")]
+        public IActionResult UpdateStaffProduct(ProductStaffUpdateViewModel newProduct)
+        {
+            if (_productService.UpdateProduct(newProduct)) return StatusCode(200);
+            return StatusCode(400);
+        }
+        #endregion
 
     }
 }

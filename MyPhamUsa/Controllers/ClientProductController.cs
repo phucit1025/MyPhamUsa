@@ -23,7 +23,15 @@ namespace MyPhamUsa.Controllers
         public IActionResult GetProducts()
         {
             var results = _productService.GetClientProducts();
-            return StatusCode(200,results);
+            return StatusCode(200, results);
+        }
+
+        [HttpGet]
+        public IActionResult GetClientProduct(int id)
+        {
+            var result = _productService.GetClientProduct(id);
+            if (result != null) return StatusCode(200, result);
+            return StatusCode(400);
         }
     }
 }

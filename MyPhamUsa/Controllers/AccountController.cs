@@ -44,14 +44,14 @@ namespace MyPhamUsa.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> LoginV2([FromBody] LoginViewModel loginViewModel)
         {
-            var resultToken = await _accountService.Login(loginViewModel);
-            if (resultToken.IsNullOrEmpty())
+            var result = await _accountService.LoginV2(loginViewModel);
+            if (result == null)
             {
                 return StatusCode(400);
             }
             else
             {
-                return StatusCode(200, new {token = resultToken });
+                return StatusCode(200, result);
             }
         }
 
@@ -78,7 +78,7 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUsers()
         {
             var results = await _accountService.GetAccounts();
@@ -101,7 +101,7 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             if (await _accountService.RemoveUser(id))
@@ -113,6 +113,6 @@ namespace MyPhamUsa.Controllers
                 return StatusCode(400);
             }
         }
-       
+
     }
 }
