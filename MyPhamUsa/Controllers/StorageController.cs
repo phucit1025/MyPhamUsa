@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPhamUsa.Models.ViewModels;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -97,6 +98,13 @@ namespace MyPhamUsa.Controllers
         public IActionResult GetStorage(int id)
         {
             var result = _storageService.GetStorage(id);
+            return StatusCode(200, result);
+        }
+
+        [HttpPost]
+        public IActionResult GetDailyReport([FromBody] DateTime date)
+        {
+            var result = _storageService.GetDailyReport(date);
             return StatusCode(200, result);
         }
     }

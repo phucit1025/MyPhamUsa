@@ -22,4 +22,9 @@ namespace MyPhamUsa.Models.ViewModels
         public int Quantity { get; set; }
         public string Description { get; set; }
     }
+
+    public class DailyReportViewModel
+    {
+        public string TotalPrice { get; set; }
+    }
 }
