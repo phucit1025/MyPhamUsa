@@ -33,7 +33,7 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [AllowAnonymous]
         public IActionResult GetProducts()
         {

@@ -21,6 +21,7 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GetCategories()
         {
             var results = _categoryService.GetCategories();
