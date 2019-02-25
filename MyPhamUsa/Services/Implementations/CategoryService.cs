@@ -42,7 +42,15 @@ namespace MyPhamUsa.Services.Implementations
             var category = _context.Categories.Find(id);
             if (category != null)
             {
-                DeepDelete(category);
+                try
+                {
+                    _context.Categories.Remove(category);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateException)
+                {
+                    return false;
+                }
                 return true;
             }
             return false;
@@ -72,18 +80,5 @@ namespace MyPhamUsa.Services.Implementations
 
         }
 
-        private void DeepDelete(Category category)
-        {
-            if (category.Childs.Count != 0)
-            {
-                foreach (var child in category.Childs)
-                {
-                    DeepDelete(child);
-                }
-            }
-            category.IsDeleted = true;
-            _context.Update(category);
-            _context.SaveChanges();
-        }
     }
 }

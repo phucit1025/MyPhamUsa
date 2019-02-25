@@ -3,6 +3,8 @@ using AutoMapper;
 using MyPhamUsa.Models.Entities;
 using MyPhamUsa.Models.ViewModels;
 using System.Linq;
+using System.Collections.Generic;
+
 namespace MyPhamUsa.MappingProfiles
 {
     public class ProductProfile : Profile
@@ -14,6 +16,7 @@ namespace MyPhamUsa.MappingProfiles
                 .ForMember(vm => vm.ImagePaths, map => map.MapFrom(dm => dm.Images.Where(i => !i.IsDeleted).Select(i => i.Path).ToList()))
                 .ForMember(vm => vm.Price, map => map.MapFrom(dm => dm.Price))
                 .ForMember(vm => vm.SellPrice, map => map.MapFrom(dm => dm.SellPrice))
+                .ForMember(vm => vm.Categories, map => map.MapFrom(dm=>dm.ProductCategories.ToList()))
                 .ReverseMap()
                 .ForMember(dm => dm.Id, map => map.Ignore())
                 .ForMember(dm => dm.DateUpdated, map => map.MapFrom(vm => DateTime.Now));

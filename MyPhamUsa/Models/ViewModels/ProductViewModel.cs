@@ -14,6 +14,7 @@ namespace MyPhamUsa.Models.ViewModels
         public int SellPrice { get; set; }
         public int AvailableQuantity { get; set; }
         public List<string> ImagePaths { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
     }
 
     public class ProductOfStaffViewModel
@@ -36,6 +37,7 @@ namespace MyPhamUsa.Models.ViewModels
         public int SellPrice { get; set; }
         public int ReceiveQuantity { get; set; }
         public List<string> Base64Images { get; set; }
+        public List<int> CategoryIds { get; set; }
     }
 
     public class ClientProductViewModel
@@ -46,6 +48,7 @@ namespace MyPhamUsa.Models.ViewModels
         public int Price { get; set; }
         public int AvailableQuantity { get; set; }
         public List<string> ImagePaths { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
     }
 
     public class ProductUpdateViewModel
@@ -55,6 +58,8 @@ namespace MyPhamUsa.Models.ViewModels
         public string Description { get; set; }
         public string OriginalPrice { get; set; }
         public string SellPrice { get; set; }
+        public List<int> RemoveCategoryIds { get; set; }
+        public List<int> NewCategoryIds { get; set; }
     }
 
     public class ProductStaffUpdateViewModel

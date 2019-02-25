@@ -11,13 +11,18 @@ namespace MyPhamUsa.Services.Interfaces
     {
         ICollection<ProductViewModel> GetProducts();
         ICollection<ProductOfStaffViewModel> GetProductsByStaff();
+        ICollection<ProductViewModel> GetProducts(int categoryId);
         ProductViewModel GetProduct(int id);
         bool UpdateProduct(ProductUpdateViewModel newProduct);
         bool DeleteProduct(int id);
         bool CreateProduct(ProductCreateViewModel newProduct);
         bool RenewQuantityIndex(int productId);
+        bool UpdateProduct(ProductStaffUpdateViewModel newProduct);
+
+        #region For Client
         ICollection<ClientProductViewModel> GetClientProducts();
         ClientProductViewModel GetClientProduct(int id);
-        bool UpdateProduct(ProductStaffUpdateViewModel newProduct);
+        ICollection<ClientProductViewModel> GetClientProducts(int categoryId);
+        #endregion
     }
 }

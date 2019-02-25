@@ -64,6 +64,18 @@ namespace MyPhamUsa.Services.Implementations
                 _context.SaveChanges();
                 #endregion
 
+                #region Add To Category
+                foreach(var categoryId in newProduct.CategoryIds)
+                {
+                    _context.ProductCategories.Add(new ProductCategory()
+                    {
+                        CategoryId = categoryId,
+                        ProductId = product.Id
+                    });
+                }
+                _context.SaveChanges();
+                #endregion
+
                 transaction.Commit();
 
                 return true;
@@ -113,6 +125,7 @@ namespace MyPhamUsa.Services.Implementations
             var results = _mapper.Map<List<Product>, List<ProductViewModel>>(products);
             return results;
         }
+
         public ICollection<ProductOfStaffViewModel> GetProductsByStaff()
         {
             var products = _context.Products.Where(p => !p.IsDeleted).ToList();
@@ -150,14 +163,38 @@ namespace MyPhamUsa.Services.Implementations
         {
             var product = _context.Products.Find(newProduct.Id);
             var result = _mapper.Map<ProductUpdateViewModel, Product>(newProduct, product);
+            var tracker = _context.Database.BeginTransaction();
             try
             {
+                #region Update Info
                 _context.Update(result);
                 _context.SaveChanges();
+                #endregion
+
+                #region Update Categories
+                foreach(var categoryId in newProduct.RemoveCategoryIds)
+                {
+                    var mapping = _context.ProductCategories.FirstOrDefault(c => c.CategoryId == categoryId && c.ProductId == newProduct.Id);
+                    _context.ProductCategories.Remove(mapping);
+                }
+                _context.SaveChanges();
+                foreach(var categoryId in newProduct.NewCategoryIds)
+                {
+                    var mapping = _context.ProductCategories.Add(new ProductCategory()
+                    {
+                        CategoryId = categoryId,
+                        ProductId = newProduct.Id
+                    });
+                }
+                _context.SaveChanges();
+                #endregion
+
+                tracker.Commit();
                 return true;
             }
             catch (DbUpdateException)
             {
+                tracker.Rollback();
                 return false;
             }
         }
@@ -219,6 +256,26 @@ namespace MyPhamUsa.Services.Implementations
                 return result;
             }
             return null;
+        }
+
+        public ICollection<ProductViewModel> GetProducts(int categoryId)
+        {
+            var category = _context.Categories.Find(categoryId);
+            if (category.ProductCategories.Count != 0)
+            {
+                return _mapper.Map<List<Product>, List<ProductViewModel>>(category.ProductCategories.Select(c => c.Product).Where(p=>!p.IsDeleted).ToList());
+            }
+            return new List<ProductViewModel>();
+        }
+
+        public ICollection<ClientProductViewModel> GetClientProducts(int categoryId)
+        {
+            var category = _context.Categories.Find(categoryId);
+            if (category.ProductCategories.Count != 0)
+            {
+                return _mapper.Map<List<Product>, List<ClientProductViewModel>>(category.ProductCategories.Select(c => c.Product).Where(p => !p.IsDeleted).ToList());
+            }
+            return new List<ClientProductViewModel>();
         }
     }
 }
