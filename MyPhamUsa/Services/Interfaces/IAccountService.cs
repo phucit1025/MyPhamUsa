@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MyPhamUsa.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyPhamUsa.Models.ViewModels;
 
 namespace MyPhamUsa.Services.Interfaces
 {

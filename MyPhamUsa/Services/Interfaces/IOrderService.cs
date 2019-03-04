@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using MyPhamUsa.Models.ViewModels;
 using System.Collections.Generic;
-using MyPhamUsa.Models.ViewModels;
 namespace MyPhamUsa.Services.Interfaces
 {
     public interface IOrderService

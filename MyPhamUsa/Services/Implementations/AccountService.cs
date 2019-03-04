@@ -1,19 +1,19 @@
-﻿using System;
-using MyPhamUsa.Models.ViewModels;
-using MyPhamUsa.Services.Interfaces;
-using MyPhamUsa.Data;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using MyPhamUsa.Data;
+using MyPhamUsa.Extensions;
+using MyPhamUsa.Models.ViewModels;
+using MyPhamUsa.Services.Interfaces;
+using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using MyPhamUsa.Extensions;
-using AutoMapper;
+using System.Threading.Tasks;
 
 namespace MyPhamUsa.Services.Implementations
 {

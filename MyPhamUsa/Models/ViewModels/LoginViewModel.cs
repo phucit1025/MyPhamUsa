@@ -1,5 +1,4 @@
-﻿using System;
-namespace MyPhamUsa.Models.ViewModels
+﻿namespace MyPhamUsa.Models.ViewModels
 {
     public class LoginViewModel
     {

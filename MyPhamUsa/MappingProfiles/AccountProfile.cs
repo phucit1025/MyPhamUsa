@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using MyPhamUsa.Models.ViewModels;
 namespace MyPhamUsa.MappingProfiles

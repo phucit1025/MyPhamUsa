@@ -1,9 +1,5 @@
-﻿using MyPhamUsa.Models.Entities;
-using MyPhamUsa.Models.ViewModels;
-using System;
+﻿using MyPhamUsa.Models.ViewModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyPhamUsa.Services.Interfaces
 {
@@ -18,11 +14,13 @@ namespace MyPhamUsa.Services.Interfaces
         bool CreateProduct(ProductCreateViewModel newProduct);
         bool RenewQuantityIndex(int productId);
         bool UpdateProduct(ProductStaffUpdateViewModel newProduct);
+        bool IsAvailableCode(string code);
 
         #region For Client
         ICollection<ClientProductViewModel> GetClientProducts();
         ClientProductViewModel GetClientProduct(int id);
         ICollection<ClientProductViewModel> GetClientProducts(int categoryId);
+        ICollection<ClientProductViewModel> GetClientProducts(List<int> productIds);
         #endregion
     }
 }

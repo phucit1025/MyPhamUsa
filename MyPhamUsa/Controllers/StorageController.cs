@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPhamUsa.Models.ViewModels;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 using MyPhamUsa.Services.Interfaces;
+using System;
 
 namespace MyPhamUsa.Controllers
 {

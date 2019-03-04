@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MyPhamUsa.Models.ViewModels;
 using MyPhamUsa.Services.Interfaces;
-using System;
 
 namespace MyPhamUsa.Controllers
 {
@@ -65,6 +64,13 @@ namespace MyPhamUsa.Controllers
         {
             var result = _productService.GetProduct(id);
             if (result != null) return StatusCode(200, result);
+            return StatusCode(400);
+        }
+
+        [HttpPost]
+        public IActionResult IsAvailableCode([FromBody] string code)
+        {
+            if (_productService.IsAvailableCode(code)) return StatusCode(200);
             return StatusCode(400);
         }
 

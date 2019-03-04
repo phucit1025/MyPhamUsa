@@ -1,6 +1,5 @@
-﻿using System;
+﻿using MyPhamUsa.Models.ViewModels;
 using System.Collections.Generic;
-using MyPhamUsa.Models.ViewModels;
 
 namespace MyPhamUsa.Services.Interfaces
 {

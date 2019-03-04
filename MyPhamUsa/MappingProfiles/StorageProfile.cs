@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using MyPhamUsa.Models.Entities;
 using MyPhamUsa.Models.ViewModels;
 using System.Linq;

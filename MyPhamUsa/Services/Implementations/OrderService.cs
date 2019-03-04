@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using MyPhamUsa.Data;
+using MyPhamUsa.Models.Entities;
 using MyPhamUsa.Models.ViewModels;
 using MyPhamUsa.Services.Interfaces;
-using MyPhamUsa.Data;
-using AutoMapper;
-using MyPhamUsa.Models.Entities;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MyPhamUsa.Services.Implementations

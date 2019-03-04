@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using MyPhamUsa.Models.Entities;
 using MyPhamUsa.Models.ViewModels;
 namespace MyPhamUsa.MappingProfiles

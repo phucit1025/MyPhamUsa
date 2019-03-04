@@ -1,8 +1,6 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
 
 namespace MyPhamUsa.Extensions
 {

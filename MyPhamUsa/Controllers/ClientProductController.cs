@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 using MyPhamUsa.Services.Interfaces;
+using System.Collections.Generic;
 
 namespace MyPhamUsa.Controllers
 {
@@ -32,6 +29,13 @@ namespace MyPhamUsa.Controllers
             var result = _productService.GetClientProduct(id);
             if (result != null) return StatusCode(200, result);
             return StatusCode(400);
+        }
+
+        [HttpGet]
+        public IActionResult GetClientProducts(List<int> ids)
+        {
+            var results = _productService.GetClientProducts(ids);
+            return StatusCode(200, results);
         }
     }
 }

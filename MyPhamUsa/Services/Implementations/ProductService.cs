@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
+using Castle.Core.Internal;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MyPhamUsa.Data;
+using MyPhamUsa.Models.Entities;
 using MyPhamUsa.Models.ViewModels;
 using MyPhamUsa.Services.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MyPhamUsa.Models.Entities;
-using Microsoft.EntityFrameworkCore;
 using System.IO;
-using Microsoft.AspNetCore.Http;
-using Castle.Core.Internal;
+using System.Linq;
 
 namespace MyPhamUsa.Services.Implementations
 {
@@ -64,17 +63,17 @@ namespace MyPhamUsa.Services.Implementations
                 _context.SaveChanges();
                 #endregion
 
-                #region Add To Category
-                foreach(var categoryId in newProduct.CategoryIds)
-                {
-                    _context.ProductCategories.Add(new ProductCategory()
-                    {
-                        CategoryId = categoryId,
-                        ProductId = product.Id
-                    });
-                }
-                _context.SaveChanges();
-                #endregion
+                //#region Add To Category
+                //foreach(var categoryId in newProduct.CategoryIds)
+                //{
+                //    _context.ProductCategories.Add(new ProductCategory()
+                //    {
+                //        CategoryId = categoryId,
+                //        ProductId = product.Id
+                //    });
+                //}
+                //_context.SaveChanges();
+                //#endregion
 
                 transaction.Commit();
 
@@ -172,13 +171,13 @@ namespace MyPhamUsa.Services.Implementations
                 #endregion
 
                 #region Update Categories
-                foreach(var categoryId in newProduct.RemoveCategoryIds)
+                foreach (var categoryId in newProduct.RemoveCategoryIds)
                 {
                     var mapping = _context.ProductCategories.FirstOrDefault(c => c.CategoryId == categoryId && c.ProductId == newProduct.Id);
                     _context.ProductCategories.Remove(mapping);
                 }
                 _context.SaveChanges();
-                foreach(var categoryId in newProduct.NewCategoryIds)
+                foreach (var categoryId in newProduct.NewCategoryIds)
                 {
                     var mapping = _context.ProductCategories.Add(new ProductCategory()
                     {
@@ -263,7 +262,7 @@ namespace MyPhamUsa.Services.Implementations
             var category = _context.Categories.Find(categoryId);
             if (category.ProductCategories.Count != 0)
             {
-                return _mapper.Map<List<Product>, List<ProductViewModel>>(category.ProductCategories.Select(c => c.Product).Where(p=>!p.IsDeleted).ToList());
+                return _mapper.Map<List<Product>, List<ProductViewModel>>(category.ProductCategories.Select(c => c.Product).Where(p => !p.IsDeleted).ToList());
             }
             return new List<ProductViewModel>();
         }
@@ -276,6 +275,30 @@ namespace MyPhamUsa.Services.Implementations
                 return _mapper.Map<List<Product>, List<ClientProductViewModel>>(category.ProductCategories.Select(c => c.Product).Where(p => !p.IsDeleted).ToList());
             }
             return new List<ClientProductViewModel>();
+        }
+
+        public ICollection<ClientProductViewModel> GetClientProducts(List<int> productIds)
+        {
+            var results = new List<ClientProductViewModel>();
+            productIds.ForEach(p =>
+            {
+                var product = _context.Products.Find(p);
+                results.Add(_mapper.Map<Product, ClientProductViewModel>(product));
+            });
+            return results;
+        }
+
+        public bool IsAvailableCode(string code)
+        {
+            var existedCode = _context.Products.Where(c => c.Code.Equals(code.Trim(), StringComparison.CurrentCultureIgnoreCase)).ToList();
+            if (existedCode.Any())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

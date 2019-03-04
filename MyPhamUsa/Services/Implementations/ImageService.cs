@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using MyPhamUsa.Models.ViewModels;
-using MyPhamUsa.Services.Interfaces;
-using MyPhamUsa.Data;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 using MoreLinq;
-using System.Linq;
-using AutoMapper;
+using MyPhamUsa.Data;
 using MyPhamUsa.Models.Entities;
+using MyPhamUsa.Models.ViewModels;
+using MyPhamUsa.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace MyPhamUsa.Services.Implementations
 {

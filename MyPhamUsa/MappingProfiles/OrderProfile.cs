@@ -1,7 +1,6 @@
-﻿using System;
-using AutoMapper;
-using MyPhamUsa.Models.ViewModels;
+﻿using AutoMapper;
 using MyPhamUsa.Models.Entities;
+using MyPhamUsa.Models.ViewModels;
 namespace MyPhamUsa.MappingProfiles
 {
     public class OrderProfile:Profile

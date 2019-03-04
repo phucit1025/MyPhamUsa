@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MyPhamUsa.Models.ViewModels
 {
     public class ProductViewModel
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
@@ -20,6 +18,7 @@ namespace MyPhamUsa.Models.ViewModels
     public class ProductOfStaffViewModel
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int SellPrice { get; set; }
@@ -31,6 +30,7 @@ namespace MyPhamUsa.Models.ViewModels
     public class ProductCreateViewModel
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
@@ -43,6 +43,7 @@ namespace MyPhamUsa.Models.ViewModels
     public class ClientProductViewModel
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
@@ -54,6 +55,7 @@ namespace MyPhamUsa.Models.ViewModels
     public class ProductUpdateViewModel
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string OriginalPrice { get; set; }
@@ -65,6 +67,7 @@ namespace MyPhamUsa.Models.ViewModels
     public class ProductStaffUpdateViewModel
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }

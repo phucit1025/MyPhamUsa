@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyPhamUsa.Data;
+using MyPhamUsa.Models.Entities;
 using MyPhamUsa.Models.ViewModels;
 using MyPhamUsa.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MyPhamUsa.Models.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace MyPhamUsa.Services.Implementations
 {
