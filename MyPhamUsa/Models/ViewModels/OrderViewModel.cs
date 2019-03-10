@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MyPhamUsa.Models.ViewModels
 {
@@ -25,6 +26,7 @@ namespace MyPhamUsa.Models.ViewModels
         public string PhoneNumber { get; set; }
         public string Description { get; set; }
         public List<OrderItemViewModel> OrderItems { get; set; }
+        public string DateCreated { get; set; }
     }
 
     public class OrderItemViewModel

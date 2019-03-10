@@ -171,19 +171,26 @@ namespace MyPhamUsa.Services.Implementations
                 #endregion
 
                 #region Update Categories
-                foreach (var categoryId in newProduct.RemoveCategoryIds)
+                var productCategories = product.ProductCategories;
+                //Check Has New Category or Not
+                foreach (var categoryId in newProduct.CategoryIds)
                 {
-                    var mapping = _context.ProductCategories.FirstOrDefault(c => c.CategoryId == categoryId && c.ProductId == newProduct.Id);
-                    _context.ProductCategories.Remove(mapping);
-                }
-                _context.SaveChanges();
-                foreach (var categoryId in newProduct.NewCategoryIds)
-                {
-                    var mapping = _context.ProductCategories.Add(new ProductCategory()
+                    if (!productCategories.Any(c => c.Id == categoryId))
                     {
-                        CategoryId = categoryId,
-                        ProductId = newProduct.Id
-                    });
+                        _context.ProductCategories.Add(new ProductCategory()
+                        {
+                            ProductId = product.Id,
+                            CategoryId = categoryId
+                        });
+                    }
+                }
+                //Check Has Deleted Category or Not
+                foreach (var categoryMapping in productCategories)
+                {
+                    if (!newProduct.CategoryIds.Any(c => c == categoryMapping.CategoryId))
+                    {
+                        _context.ProductCategories.Remove(categoryMapping);
+                    }
                 }
                 _context.SaveChanges();
                 #endregion
@@ -288,10 +295,20 @@ namespace MyPhamUsa.Services.Implementations
             return results;
         }
 
-        public bool IsAvailableCode(string code)
+        public bool IsAvailableCode(ProductCodeValidViewModel model)
         {
-            var existedCode = _context.Products.Where(c => c.Code.Equals(code.Trim(), StringComparison.CurrentCultureIgnoreCase)).ToList();
-            if (existedCode.Any())
+            var existedCodes = new List<Product>();
+            if (model.ProductId != 0)
+            {
+                existedCodes = _context.Products.Where(c => c.Code.Equals(model.Code.Trim(), StringComparison.CurrentCultureIgnoreCase) && c.Id != model.ProductId).ToList();
+            }
+            else
+            {
+                existedCodes = _context.Products.Where(c => c.Code.Equals(model.Code.Trim(), StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+            }
+
+            if (existedCodes.Any())
             {
                 return false;
             }
@@ -299,6 +316,21 @@ namespace MyPhamUsa.Services.Implementations
             {
                 return true;
             }
+        }
+
+        public ICollection<ClientProductViewModel> SearchClientProducts(string name)
+        {
+            var products = _context.Products.Where(p => !p.IsDeleted && p.Name.Contains(name, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            if (products.Any())
+            {
+                var results = _mapper.Map<List<Product>, List<ClientProductViewModel>>(products);
+                return results;
+            }
+            else
+            {
+                return new List<ClientProductViewModel>();
+            }
+
         }
     }
 }

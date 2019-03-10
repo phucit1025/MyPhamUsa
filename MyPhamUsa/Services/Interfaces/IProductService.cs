@@ -14,13 +14,13 @@ namespace MyPhamUsa.Services.Interfaces
         bool CreateProduct(ProductCreateViewModel newProduct);
         bool RenewQuantityIndex(int productId);
         bool UpdateProduct(ProductStaffUpdateViewModel newProduct);
-        bool IsAvailableCode(string code);
-
+        bool IsAvailableCode(ProductCodeValidViewModel code);
         #region For Client
         ICollection<ClientProductViewModel> GetClientProducts();
         ClientProductViewModel GetClientProduct(int id);
         ICollection<ClientProductViewModel> GetClientProducts(int categoryId);
         ICollection<ClientProductViewModel> GetClientProducts(List<int> productIds);
+        ICollection<ClientProductViewModel> SearchClientProducts(string name);
         #endregion
     }
 }

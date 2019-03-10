@@ -37,5 +37,21 @@ namespace MyPhamUsa.Controllers
             var results = _productService.GetClientProducts(ids);
             return StatusCode(200, results);
         }
+
+        [HttpGet]
+        public IActionResult GetProductsByCategory(int categoryId)
+        {
+            var results = _productService.GetClientProducts(categoryId);
+            return StatusCode(200, results);
+        }
+
+        [HttpGet]
+        public IActionResult SearchProducts(string name)
+        {
+            var results = _productService.SearchClientProducts(name);
+            return StatusCode(200, results);
+        }
+
+
     }
 }

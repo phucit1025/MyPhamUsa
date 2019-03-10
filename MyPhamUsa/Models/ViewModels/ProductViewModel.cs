@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace MyPhamUsa.Models.ViewModels
 {
@@ -60,8 +61,7 @@ namespace MyPhamUsa.Models.ViewModels
         public string Description { get; set; }
         public string OriginalPrice { get; set; }
         public string SellPrice { get; set; }
-        public List<int> RemoveCategoryIds { get; set; }
-        public List<int> NewCategoryIds { get; set; }
+        public List<int> CategoryIds { get; set; }
     }
 
     public class ProductStaffUpdateViewModel
@@ -71,4 +71,16 @@ namespace MyPhamUsa.Models.ViewModels
         public string Name { get; set; }
         public string Description { get; set; }
     }
+
+    public class ProductCodeValidViewModel
+    {
+        public int ProductId { get; set; }
+        public string Code { get; set; }
+    }
+
+    public class TestObject
+    {
+        public List<IFormFile> Files { get; set; }
+    }
+
 }

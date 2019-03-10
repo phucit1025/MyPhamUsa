@@ -26,6 +26,7 @@ namespace MyPhamUsa.Services.Implementations
 
             try
             {
+
                 #region Create Order
                 var order = _mapper.Map<OrderCreateViewModel, Order>(newOrder);
                 _context.Orders.Add(order);
@@ -77,7 +78,7 @@ namespace MyPhamUsa.Services.Implementations
             try
             {
                 var order = _context.Orders.Find(orderId);
-                foreach(var item in order.OrderItems)
+                foreach (var item in order.OrderItems)
                 {
                     item.DateUpdated = DateTime.Now;
                     item.IsIssued = true;
@@ -110,18 +111,26 @@ namespace MyPhamUsa.Services.Implementations
             return _mapper.Map<Order, OrderViewModel>(order);
         }
 
-        public ICollection<OrderViewModel> GetOrders()
+        public ICollection<OrderViewModel> GetOrders(DateTime? time)
         {
-            var orders = _context.Orders.ToList();
+            var orders = new List<Order>();
+            if (time.HasValue)
+            {
+                orders = _context.Orders.Where(o => o.DateCreated.ToShortDateString().Equals(time.Value.ToShortDateString())).ToList();
+            }
+            else
+            {
+                orders = _context.Orders.ToList();
+
+            }
+
             if (orders.Any())
             {
                 var results = _mapper.Map<List<Order>, List<OrderViewModel>>(orders);
                 return results;
             }
-            else
-            {
-                return new List<OrderViewModel>();
-            }
+
+            return new List<OrderViewModel>();
 
         }
     }

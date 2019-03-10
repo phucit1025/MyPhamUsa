@@ -7,11 +7,7 @@ namespace MyPhamUsa.Services.Interfaces
     public interface IStorageService
     {
         ICollection<StorageViewModel> GetStorages();
-        ICollection<StorageViewModel> GetStorages(bool isIssued);
-        ICollection<StorageViewModel> GetStorages(int productId);
-        ICollection<StorageViewModel> GetStorages(int productId, bool isIssued);
-        ICollection<StorageViewModel> GetStorages(int productId, bool isIssued, int orderId);
-        ICollection<StorageViewModel> GetStorages(int? productId, int day, int month, int? year);
+        FilterStorageViewModel GetStorages(StorageFilterViewModel filter);
         StorageViewModel GetStorage(int id);
         bool Issue(IRViewModel issueModel);
         bool Receive(IRViewModel receiveModel);

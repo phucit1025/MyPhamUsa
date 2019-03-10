@@ -1,4 +1,7 @@
-﻿namespace MyPhamUsa.Models.ViewModels
+﻿using System;
+using System.Collections.Generic;
+
+namespace MyPhamUsa.Models.ViewModels
 {
     public class StorageViewModel
     {
@@ -11,6 +14,13 @@
         public string Time { get; set; }
     }
 
+    public class FilterStorageViewModel
+    {
+        public List<StorageViewModel> Storages { get; set; } = new List<StorageViewModel>();
+        public string TotalPrice { get; set; } = "0";
+        public string TotalSellPrice { get; set; } = "0";
+    }
+
     public class IRViewModel
     {
         public int ProductId { get; set; }
@@ -21,5 +31,12 @@
     public class DailyReportViewModel
     {
         public string TotalPrice { get; set; }
+    }
+
+    public class StorageFilterViewModel
+    {
+        public DateTime? Time { get; set; }
+        public bool? IsIssued { get; set; }
+        public string NameOrCode { get; set; }
     }
 }

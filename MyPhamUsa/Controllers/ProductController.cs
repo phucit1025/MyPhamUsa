@@ -68,9 +68,9 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpPost]
-        public IActionResult IsAvailableCode([FromBody] string code)
+        public IActionResult IsAvailableCode([FromBody] ProductCodeValidViewModel model)
         {
-            if (_productService.IsAvailableCode(code)) return StatusCode(200);
+            if (_productService.IsAvailableCode(model)) return StatusCode(200);
             return StatusCode(400);
         }
 
