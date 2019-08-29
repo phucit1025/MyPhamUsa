@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace MyPhamUsa.Models.ViewModels
