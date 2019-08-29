@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update;
 using MyPhamUsa.Data;
 using MyPhamUsa.Models.Entities;
 using MyPhamUsa.Models.ViewModels;
@@ -114,6 +115,16 @@ namespace MyPhamUsa.Services.Implementations
             {
                 return new FilterStorageViewModel();
             }
+        }
+
+        public StoragePagingViewModel GetStorages(int pageSize, int pageIndex)
+        {
+            var result = new StoragePagingViewModel();
+            var totalStorages = _context.Storages.Where(s => !s.IsDeleted && !s.Product.IsDeleted).OrderByDescending(s => s.DateCreated).ToList();
+            result.TotalPages = totalStorages.Count();
+            var storages = totalStorages.Skip(pageSize * pageIndex).Take(pageSize).ToList();
+            result.Results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
+            return result;
         }
 
         public bool Issue(IRViewModel issueModel)

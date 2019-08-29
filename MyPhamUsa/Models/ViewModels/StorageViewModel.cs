@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MyPhamUsa.Models.ViewModels
@@ -38,5 +39,11 @@ namespace MyPhamUsa.Models.ViewModels
         public DateTime? Time { get; set; }
         public bool? IsIssued { get; set; }
         public string NameOrCode { get; set; }
+    }
+
+    public class StoragePagingViewModel
+    {
+        public int TotalPages { get; set; }
+        public ICollection<StorageViewModel> Results { get; set; } = new List<StorageViewModel>();
     }
 }

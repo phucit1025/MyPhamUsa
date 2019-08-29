@@ -55,6 +55,13 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpGet]
+        public IActionResult GetStoragesPaging(int pageSize = 20, int pageIndex = 0)
+        {
+            var result = _storageService.GetStorages(pageSize,pageIndex);
+            return StatusCode(200, new { totalPages = result.TotalPages, results = result.Results});
+        }
+
+        [HttpGet]
         public IActionResult GetStorage(int id)
         {
             var result = _storageService.GetStorage(id);

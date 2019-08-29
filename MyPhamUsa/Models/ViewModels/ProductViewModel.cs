@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MyPhamUsa.Models.ViewModels
@@ -14,6 +15,12 @@ namespace MyPhamUsa.Models.ViewModels
         public int AvailableQuantity { get; set; }
         public List<string> ImagePaths { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
+    }
+
+    public class ProductPagingViewModel
+    {
+        public int TotalPages { get; set; }
+        public ICollection<ProductViewModel> Results { get; set; } = new List<ProductViewModel>();
     }
 
     public class ProductOfStaffViewModel

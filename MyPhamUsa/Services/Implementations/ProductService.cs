@@ -332,5 +332,26 @@ namespace MyPhamUsa.Services.Implementations
             }
 
         }
+
+        public ProductPagingViewModel GetProducts(int pageSize, int pageIndex)
+        {
+            var result = new ProductPagingViewModel();
+            var totalProducts = _context.Products.Where(p => !p.IsDeleted).OrderByDescending(p=>p.DateCreated);
+            result.TotalPages = totalProducts.Count();
+            var products = totalProducts.Skip(pageSize * pageIndex).Take(pageSize).ToList();
+            result.Results = _mapper.Map<List<Product>, List<ProductViewModel>>(products);
+            return result;
+        }
+
+        public ProductPagingViewModel GetProducts(int categoryId, int pageSize, int pageIndex)
+        {
+            var result = new ProductPagingViewModel();
+            var totalProducts = _context.ProductCategories.Where(c=>!c.IsDeleted && c.CategoryId == categoryId && !c.Product.IsDeleted).Select(p=>p.Product).OrderByDescending(p => p.DateCreated);
+            result.TotalPages = totalProducts.Count();
+            var products = totalProducts.Skip(pageSize * pageIndex).Take(pageSize).ToList();
+            result.Results = _mapper.Map<List<Product>, List<ProductViewModel>>(products);
+            return result;
+        }
+
     }
 }

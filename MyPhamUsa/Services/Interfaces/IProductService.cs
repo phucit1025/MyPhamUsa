@@ -15,6 +15,8 @@ namespace MyPhamUsa.Services.Interfaces
         bool RenewQuantityIndex(int productId);
         bool UpdateProduct(ProductStaffUpdateViewModel newProduct);
         bool IsAvailableCode(ProductCodeValidViewModel code);
+        ProductPagingViewModel GetProducts(int pageSize, int pageIndex);
+        ProductPagingViewModel GetProducts(int categoryId, int pageSize, int pageIndex);
         #region For Client
         ICollection<ClientProductViewModel> GetClientProducts();
         ClientProductViewModel GetClientProduct(int id);

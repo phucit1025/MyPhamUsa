@@ -8,7 +8,7 @@ namespace MyPhamUsa.Controllers
     [Route("api/Product/[action]")]
     [ApiController]
     [Authorize(Roles = "Admin, Staff")]
-    public partial class ProductController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
 
@@ -39,6 +39,15 @@ namespace MyPhamUsa.Controllers
         {
             var result = _productService.GetProducts();
             return StatusCode(200, result);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
+        public IActionResult GetProductsByCategory(int categoryId)
+        {
+            var results = _productService.GetProducts(categoryId);
+            return StatusCode(200, results);
         }
 
         [HttpDelete]
@@ -72,6 +81,20 @@ namespace MyPhamUsa.Controllers
         {
             if (_productService.IsAvailableCode(model)) return StatusCode(200);
             return StatusCode(400);
+        }
+
+        [HttpGet]
+        public IActionResult GetProductsPaging(int pageSize = 20, int pageIndex = 0)
+        {
+            var result = _productService.GetProducts(pageSize, pageIndex);
+            return StatusCode(200, new { totalPages = result.TotalPages, results = result.Results });
+        }
+
+        [HttpGet]
+        public IActionResult GetProductsByCategoryPaging(int categoryId, int pageSize = 20, int pageIndex = 20)
+        {
+            var result = _productService.GetProducts(categoryId, pageSize, pageIndex);
+            return StatusCode(200, new { totalPages = result.TotalPages, results = result.Results });
         }
 
         #region Staff
