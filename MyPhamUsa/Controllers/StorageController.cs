@@ -34,7 +34,6 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public IActionResult Receive([FromBody] IRViewModel model)
         {
             if (_storageService.Receive(model))
@@ -48,14 +47,7 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetStorages()
-        {
-            var results = _storageService.GetStorages();
-            return StatusCode(200, results);
-        }
-
-        [HttpGet]
-        public IActionResult GetStoragesPaging(int pageSize = 20, int pageIndex = 0)
+        public IActionResult GetStorages(int pageSize = 20, int pageIndex = 0)
         {
             var result = _storageService.GetStorages(pageSize,pageIndex);
             return StatusCode(200, new { totalPages = result.TotalPages, results = result.Results});

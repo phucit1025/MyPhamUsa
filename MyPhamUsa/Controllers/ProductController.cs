@@ -17,6 +17,31 @@ namespace MyPhamUsa.Controllers
             _productService = productService;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetProduct(int id)
+        {
+            var result = _productService.GetProduct(id);
+            if (result != null) return StatusCode(200, result);
+            return StatusCode(400);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetProducts(int pageSize = 20, int pageIndex = 0)
+        {
+            var result = _productService.GetProducts(pageSize, pageIndex);
+            return StatusCode(200, result);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetProductsByCategory(int categoryId, int pageSize = 20, int pageIndex = 20)
+        {
+            var result = _productService.GetProducts(categoryId, pageSize, pageIndex);
+            return StatusCode(200, result);
+        }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public IActionResult CreateProduct([FromBody] ProductCreateViewModel newProduct)
@@ -32,23 +57,6 @@ namespace MyPhamUsa.Controllers
             }
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
-        public IActionResult GetProducts()
-        {
-            var result = _productService.GetProducts();
-            return StatusCode(200, result);
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
-        public IActionResult GetProductsByCategory(int categoryId)
-        {
-            var results = _productService.GetProducts(categoryId);
-            return StatusCode(200, results);
-        }
 
         [HttpDelete]
         [Authorize(Roles = "Admin")]
@@ -68,33 +76,11 @@ namespace MyPhamUsa.Controllers
             return StatusCode(400);
         }
 
-        [HttpGet]
-        public IActionResult GetProduct(int id)
-        {
-            var result = _productService.GetProduct(id);
-            if (result != null) return StatusCode(200, result);
-            return StatusCode(400);
-        }
-
         [HttpPost]
         public IActionResult IsAvailableCode([FromBody] ProductCodeValidViewModel model)
         {
             if (_productService.IsAvailableCode(model)) return StatusCode(200);
             return StatusCode(400);
-        }
-
-        [HttpGet]
-        public IActionResult GetProductsPaging(int pageSize = 20, int pageIndex = 0)
-        {
-            var result = _productService.GetProducts(pageSize, pageIndex);
-            return StatusCode(200, new { totalPages = result.TotalPages, results = result.Results });
-        }
-
-        [HttpGet]
-        public IActionResult GetProductsByCategoryPaging(int categoryId, int pageSize = 20, int pageIndex = 20)
-        {
-            var result = _productService.GetProducts(categoryId, pageSize, pageIndex);
-            return StatusCode(200, new { totalPages = result.TotalPages, results = result.Results });
         }
 
         #region Staff
