@@ -23,21 +23,6 @@ namespace MyPhamUsa.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel loginViewModel)
-        {
-            var token = await _accountService.Login(loginViewModel);
-            if (token.IsNullOrEmpty())
-            {
-                return StatusCode(400);
-            }
-            else
-            {
-                return StatusCode(200, token);
-            }
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> LoginV2([FromBody] LoginViewModel loginViewModel)
         {
             var result = await _accountService.LoginV2(loginViewModel);

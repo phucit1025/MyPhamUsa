@@ -54,6 +54,7 @@ namespace MyPhamUsa.Models.ViewModels
     public class StoragePagingViewModel
     {
         public int TotalPages { get; set; }
+        public int Total { get; set; }
         public ICollection<StorageViewModel> Results { get; set; } = new List<StorageViewModel>();
     }
 }

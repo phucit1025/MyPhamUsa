@@ -5,9 +5,7 @@ namespace MyPhamUsa.Services.Interfaces
 {
     public interface IProductService
     {
-        ICollection<ProductViewModel> GetProducts();
-        ICollection<ProductOfStaffViewModel> GetProductsByStaff();
-        ICollection<ProductViewModel> GetProducts(int categoryId);
+        ProductOfStaffPagingViewModel GetProductsByStaff(int pageSize, int pageIndex);
         ProductViewModel GetProduct(int id);
         bool UpdateProduct(ProductUpdateViewModel newProduct);
         bool DeleteProduct(int id);
@@ -17,12 +15,5 @@ namespace MyPhamUsa.Services.Interfaces
         bool IsAvailableCode(ProductCodeValidViewModel code);
         ProductPagingViewModel GetProducts(int pageSize, int pageIndex);
         ProductPagingViewModel GetProducts(int categoryId, int pageSize, int pageIndex);
-        #region For Client
-        ICollection<ClientProductViewModel> GetClientProducts();
-        ClientProductViewModel GetClientProduct(int id);
-        ICollection<ClientProductViewModel> GetClientProducts(int categoryId);
-        ICollection<ClientProductViewModel> GetClientProducts(List<int> productIds);
-        ICollection<ClientProductViewModel> SearchClientProducts(string name);
-        #endregion
     }
 }

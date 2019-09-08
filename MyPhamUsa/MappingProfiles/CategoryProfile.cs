@@ -14,8 +14,9 @@ namespace MyPhamUsa.MappingProfiles
                 .ReverseMap()
                 .ForMember(dm => dm.Id, map => map.Ignore());
 
-            CreateMap<ProductCategory, CategoryViewModel>()
-                .ForMember(vm => vm.Id, map => map.MapFrom(dm => dm.CategoryId))
+            CreateMap<ProductCategory, ProductCategoryViewModel>()
+                .ForMember(vm => vm.MappingId, map => map.MapFrom(dm => dm.Id))
+                .ForMember(vm => vm.CategoryId, map => map.MapFrom(dm => dm.CategoryId))
                 .ForMember(vm => vm.Name, map => map.MapFrom(dm => dm.Category.Name));
         }
     }

@@ -85,9 +85,9 @@ namespace MyPhamUsa.Controllers
 
         #region Staff
         [HttpGet]
-        public IActionResult GetProductsByStaff()
+        public IActionResult GetProductsByStaff(int pageSize, int pageIndex)
         {
-            var result = _productService.GetProductsByStaff();
+            var result = _productService.GetProductsByStaff(pageSize, pageIndex);
             return StatusCode(200, result);
         }
 

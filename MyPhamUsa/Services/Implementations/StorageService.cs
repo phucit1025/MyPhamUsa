@@ -120,7 +120,8 @@ namespace MyPhamUsa.Services.Implementations
         {
             var result = new StoragePagingViewModel();
             var totalStorages = _context.Storages.Where(s => !s.IsDeleted && !s.Product.IsDeleted).OrderByDescending(s => s.DateCreated).ToList();
-            result.TotalPages = totalStorages.Count();
+            result.Total = totalStorages.Count();
+            result.TotalPages = (int)Math.Ceiling((double)totalStorages.Count / pageSize);
             var storages = totalStorages.Skip(pageSize * pageIndex).Take(pageSize).ToList();
             result.Results = _mapper.Map<List<Storage>, List<StorageViewModel>>(storages);
             return result;
