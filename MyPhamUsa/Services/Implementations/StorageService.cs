@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Update;
 using MyPhamUsa.Data;
 using MyPhamUsa.Models.Entities;
 using MyPhamUsa.Models.ViewModels;
