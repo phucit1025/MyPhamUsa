@@ -266,6 +266,7 @@ namespace MyPhamUsa.Services.Implementations
 
         public ProductPagingViewModel GetProducts(int pageSize, int pageIndex)
         {
+
             var result = new ProductPagingViewModel();
             var totalProducts = _context.Products.Where(p => !p.IsDeleted).OrderByDescending(p => p.DateCreated);
             result.Total = totalProducts.Count();
@@ -285,6 +286,8 @@ namespace MyPhamUsa.Services.Implementations
             result.Results = _mapper.Map<List<Product>, List<ProductViewModel>>(products);
             return result;
         }
+
+
 
     }
 }

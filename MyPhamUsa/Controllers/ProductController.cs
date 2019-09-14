@@ -35,8 +35,8 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IActionResult GetProductsByCategory(int categoryId, int pageSize = 20, int pageIndex = 20)
+        //[Authorize(Roles = "Admin")]
+        public IActionResult GetProductsByCategory(int categoryId, int pageSize = 20, int pageIndex = 0)
         {
             var result = _productService.GetProducts(categoryId, pageSize, pageIndex);
             return StatusCode(200, result);
