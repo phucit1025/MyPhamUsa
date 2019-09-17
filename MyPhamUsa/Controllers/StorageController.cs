@@ -50,7 +50,7 @@ namespace MyPhamUsa.Controllers
         public IActionResult GetStorages(int pageSize = 20, int pageIndex = 0)
         {
             var result = _storageService.GetStorages(pageSize, pageIndex);
-            return StatusCode(200, new { totalPages = result.TotalPages, results = result.Results });
+            return StatusCode(200, result);
         }
 
         [HttpGet]
