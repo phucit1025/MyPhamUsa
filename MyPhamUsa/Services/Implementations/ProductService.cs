@@ -68,7 +68,7 @@ namespace MyPhamUsa.Services.Implementations
                 var categories = newProduct.CategoryIds.Select(catId => new ProductCategory()
                 {
                     CategoryId = catId,
-                    ProductId = newProduct.Id
+                    ProductId = product.Id
                 }).ToList();
                 _context.AddRange(categories);
                 _context.SaveChanges();
