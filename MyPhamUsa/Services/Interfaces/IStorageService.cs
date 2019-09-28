@@ -12,6 +12,6 @@ namespace MyPhamUsa.Services.Interfaces
         StorageViewModel GetStorage(int id);
         bool Issue(IRViewModel issueModel);
         bool Receive(IRViewModel receiveModel);
-        DailyReportViewModel GetDailyReport(DateTime date);
+        
     }
 }

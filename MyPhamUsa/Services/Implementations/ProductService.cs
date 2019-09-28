@@ -287,7 +287,25 @@ namespace MyPhamUsa.Services.Implementations
             return result;
         }
 
-
-
+        public ProductPagingViewModel SearchProducts(string name, int pageSize, int pageIndex)
+        {
+            var result = new ProductPagingViewModel();
+            var allProducts = new List<Product>();
+            if (!name.IsNullOrEmpty())
+            {
+                allProducts = _context.Products.Where(q => !q.IsDeleted && EF.Functions.FreeText(q.Name, name)).ToList();
+            }
+            else
+            {
+                allProducts = _context.Products.Where(q => !q.IsDeleted).OrderByDescending(q => q.DateCreated).ToList();
+            }
+            if (allProducts.Any())
+            {
+                result.Total = allProducts.Count();
+                result.TotalPages = (int)Math.Ceiling((double)result.Total / pageSize);
+                result.Results = _mapper.Map<List<Product>, List<ProductViewModel>>(allProducts.Skip(pageSize * pageIndex).Take(pageSize).ToList());
+            }
+            return result;
+        }
     }
 }

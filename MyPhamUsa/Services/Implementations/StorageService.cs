@@ -22,28 +22,6 @@ namespace MyPhamUsa.Services.Implementations
             _mapper = mapper;
         }
 
-        public DailyReportViewModel GetDailyReport(DateTime date)
-        {
-            var issueTransactions = _context.Storages.Where(s => !s.IsDeleted && s.IsIssued && s.DateUpdated.Day == date.Day && s.DateUpdated.Month == date.Month).ToList();
-            if (issueTransactions.Any())
-            {
-                var total = 0;
-                foreach (var transaction in issueTransactions)
-                {
-                    total += (transaction.Quantity * Convert.ToInt32(transaction.Product.Price));
-                }
-                return new DailyReportViewModel()
-                {
-                    TotalPrice = total.ToString()
-                };
-            }
-
-            return new DailyReportViewModel()
-            {
-                TotalPrice = "0"
-            };
-        }
-
         public StorageViewModel GetStorage(int id)
         {
             var storage = _context.Storages.Find(id);

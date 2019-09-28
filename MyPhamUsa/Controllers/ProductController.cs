@@ -42,6 +42,14 @@ namespace MyPhamUsa.Controllers
             return StatusCode(200, result);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult SearchProducts(string name, int pageSize = 20, int pageIndex = 0)
+        {
+            var result = _productService.SearchProducts(name, pageSize, pageIndex);
+            return StatusCode(200, result);
+        }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public IActionResult CreateProduct([FromBody] ProductCreateViewModel newProduct)

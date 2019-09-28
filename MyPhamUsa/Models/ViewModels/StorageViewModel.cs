@@ -39,11 +39,6 @@ namespace MyPhamUsa.Models.ViewModels
         public string Description { get; set; }
     }
 
-    public class DailyReportViewModel
-    {
-        public string TotalPrice { get; set; }
-    }
-
     public class StorageFilterViewModel
     {
         public DateTime? Time { get; set; }

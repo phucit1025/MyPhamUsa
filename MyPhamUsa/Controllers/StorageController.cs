@@ -73,11 +73,5 @@ namespace MyPhamUsa.Controllers
             return StatusCode(200, new { storages = result.Storages, totalPage, pageIndex, total = totalRecord, totalPrice = result.TotalPrice, totalSellPrice = result.TotalSellPrice });
         }
 
-        [HttpPost]
-        public IActionResult GetDailyReport([FromBody] DateTime date)
-        {
-            var result = _storageService.GetDailyReport(date);
-            return StatusCode(200, result);
-        }
     }
 }
