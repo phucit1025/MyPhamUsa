@@ -1,9 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyPhamUsa.Models.Entities
 {
-    public class Storage : BaseEntity
+    public class Storage
     {
+        [Key(), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public DateTime DateUpdated { get; set; } = DateTime.Now;
+        public bool IsDeleted { get; set; }
         public int ProductId { get; set; }
         public int? OrderId { get; set; }
         public int Quantity { get; set; }

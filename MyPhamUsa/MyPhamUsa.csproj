@@ -9,7 +9,6 @@
     <Folder Include="MappingProfiles\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,7 +27,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
     <PackageReference Include="morelinq" Version="3.1.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="11.20.1" />
   </ItemGroup>

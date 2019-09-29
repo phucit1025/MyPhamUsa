@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyPhamUsa.Services.Interfaces;
+using System;
 
 namespace MyPhamUsa.Controllers
 {
@@ -17,9 +14,37 @@ namespace MyPhamUsa.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetDayMoney(DateTime date,bool isIssue)
+        public IActionResult GetCurrentStorage()
+        {
+            var report = _statisticsService.GetCurrentStorageValue();
+            return StatusCode(200, report);
+        }
+
+        [HttpGet]
+        public IActionResult GetDayMoney(DateTime date, bool isIssue)
         {
             var report = _statisticsService.GetDayTotalMoney(date, isIssue);
+            return StatusCode(200, report);
+        }
+
+        [HttpGet]
+        public IActionResult GetMonthMoney(DateTime date, bool isIssue)
+        {
+            var report = _statisticsService.GetMonthTotalMoney(date, isIssue);
+            return StatusCode(200, report);
+        }
+
+        [HttpGet]
+        public IActionResult GetWeekMoney(DateTime date, bool isIssue)
+        {
+            var report = _statisticsService.GetWeekTotalMoney(date, isIssue);
+            return StatusCode(200, report);
+        }
+
+        [HttpGet]
+        public IActionResult GetMoneyFromTo(DateTime start, DateTime end, bool isIssue)
+        {
+            var report = _statisticsService.GetTotalMoneyFromTo(start, end, isIssue);
             return StatusCode(200, report);
         }
     }
