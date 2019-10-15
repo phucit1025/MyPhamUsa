@@ -159,7 +159,7 @@ namespace MyPhamUsa.Services.Implementations
             {
                 foreach (var storage in storages)
                 {
-                    total += (Convert.ToInt32(storage.Product.SellPrice) * storage.Quantity);
+                    total += Convert.ToInt32(storage.Product.SellPrice) * storage.Quantity;
                 }
                 return total.ToString();
             }
@@ -167,7 +167,7 @@ namespace MyPhamUsa.Services.Implementations
             {
                 foreach (var storage in storages)
                 {
-                    total += (Convert.ToInt32(storage.Product.Price) * storage.Quantity);
+                    total += Convert.ToInt32(storage.Product.Price) * storage.Quantity;
                 }
                 return total.ToString();
             }

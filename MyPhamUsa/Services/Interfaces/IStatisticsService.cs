@@ -5,10 +5,10 @@ namespace MyPhamUsa.Services.Interfaces
 {
     public interface IStatisticsService
     {
-        string GetDayTotalMoney(DateTime date, bool isIssue);
-        string GetMonthTotalMoney(DateTime date, bool isIssue);
-        string GetWeekTotalMoney(DateTime date, bool isIssue);
-        string GetTotalMoneyFromTo(DateTime from, DateTime to, bool isIssue);
+        StatisticsViewModel GetDayTotalMoney(DateTime date, bool isIssue);
+        StatisticsViewModel GetMonthTotalMoney(DateTime date, bool isIssue);
+        StatisticsViewModel GetWeekTotalMoney(DateTime date, bool isIssue);
+        StatisticsViewModel GetTotalMoneyFromTo(DateTime from, DateTime to, bool isIssue);
         CurrentStorageReport GetCurrentStorageValue();
     }
 }

@@ -26,27 +26,30 @@ namespace MyPhamUsa.Services.Implementations
             var result = new CurrentStorageReport();
             var products = _context.Products.Where(p => !p.IsDeleted && p.QuantityIndex > 0);
 
+            long totalSellPrice = 0;
             long totalPrice = 0;
             int totalQuantity = 0;
             foreach (var product in products)
             {
-                totalPrice += (product.QuantityIndex * long.Parse(product.SellPrice));
+                totalSellPrice += product.QuantityIndex * long.Parse(product.SellPrice);
+                totalPrice += product.QuantityIndex * long.Parse(product.Price);
                 totalQuantity += product.QuantityIndex;
             }
 
+            result.TotalSellPrice = totalSellPrice.ToString();
             result.TotalPrice = totalPrice.ToString();
             result.TotalQuantity = totalQuantity.ToString();
             return result;
         }
 
-        public string GetDayTotalMoney(DateTime date, bool isIssue)
+        public StatisticsViewModel GetDayTotalMoney(DateTime date, bool isIssue)
         {
             var transactions = _context.Storages.Where(s => !s.IsDeleted && s.IsIssued == isIssue && s.DateUpdated.Day == date.Day && s.DateUpdated.Month == date.Month).ToList();
 
             return GetTotalMoney(transactions);
         }
 
-        public string GetMonthTotalMoney(DateTime date, bool isIssue)
+        public StatisticsViewModel GetMonthTotalMoney(DateTime date, bool isIssue)
         {
             var transactions = _context.Storages.Where(s => !s.IsDeleted
                                                            && s.IsIssued == isIssue
@@ -55,7 +58,7 @@ namespace MyPhamUsa.Services.Implementations
             return GetTotalMoney(transactions);
         }
 
-        public string GetTotalMoneyFromTo(DateTime from, DateTime to, bool isIssue)
+        public StatisticsViewModel GetTotalMoneyFromTo(DateTime from, DateTime to, bool isIssue)
         {
             var transactions = _context.Storages.Where(s => !s.IsDeleted
                                                             && s.IsIssued == isIssue
@@ -64,7 +67,7 @@ namespace MyPhamUsa.Services.Implementations
             return GetTotalMoney(transactions);
         }
 
-        public string GetWeekTotalMoney(DateTime date, bool isIssue)
+        public StatisticsViewModel GetWeekTotalMoney(DateTime date, bool isIssue)
         {
             var startOfWeekDate = date.GetDateOfDayOfWeek(DayOfWeek.Monday);
             var endOfWeekDate = date.GetDateOfDayOfWeek(DayOfWeek.Sunday);
@@ -77,18 +80,22 @@ namespace MyPhamUsa.Services.Implementations
             return GetTotalMoney(transactions);
         }
 
-        private string GetTotalMoney(List<Storage> transactions)
+        private StatisticsViewModel GetTotalMoney(List<Storage> transactions)
         {
+            var result = new StatisticsViewModel();
             if (transactions.Any())
             {
-                var total = 0;
+                var totalPrice = 0;
+                var totalSellPrice = 0;
                 foreach (var transaction in transactions)
                 {
-                    total += (transaction.Quantity * Convert.ToInt32(transaction.Product.SellPrice));
+                    totalPrice += transaction.Quantity * Convert.ToInt32(transaction.Product.Price);
+                    totalSellPrice += transaction.Quantity * Convert.ToInt32(transaction.Product.SellPrice);
                 }
-                return total.ToString();
+                result.Price = totalPrice.ToString();
+                result.SellPrice = totalSellPrice.ToString();
             }
-            return "0";
+            return result;
         }
     }
 }
