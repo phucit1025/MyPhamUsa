@@ -89,6 +89,7 @@ namespace MyPhamUsa.Services.Implementations
         {
             string fileName;
             string imagePath;
+            base64 = base64.Split(",").ElementAt(1);
             var request = _httpContext.HttpContext.Request;
             var url = $"{request.Scheme}://{request.Host}/";
             try

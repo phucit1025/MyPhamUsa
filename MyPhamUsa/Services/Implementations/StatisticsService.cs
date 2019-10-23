@@ -13,12 +13,10 @@ namespace MyPhamUsa.Services.Implementations
     public class StatisticsService : IStatisticsService
     {
         private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
 
-        public StatisticsService(AppDbContext context, IMapper mapper)
+        public StatisticsService(AppDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public CurrentStorageReport GetCurrentStorageValue()
@@ -44,7 +42,7 @@ namespace MyPhamUsa.Services.Implementations
 
         public StatisticsViewModel GetDayTotalMoney(DateTime date, bool isIssue)
         {
-            var transactions = _context.Storages.Where(s => !s.IsDeleted && s.IsIssued == isIssue && s.DateUpdated.Day == date.Day && s.DateUpdated.Month == date.Month).ToList();
+            var transactions = _context.Storages.Where(s => !s.IsDeleted && !s.Product.IsDeleted && s.IsIssued == isIssue && s.DateUpdated.Day == date.Day && s.DateUpdated.Month == date.Month).ToList();
 
             return GetTotalMoney(transactions);
         }
@@ -52,6 +50,7 @@ namespace MyPhamUsa.Services.Implementations
         public StatisticsViewModel GetMonthTotalMoney(DateTime date, bool isIssue)
         {
             var transactions = _context.Storages.Where(s => !s.IsDeleted
+                                                           && !s.Product.IsDeleted
                                                            && s.IsIssued == isIssue
                                                            && s.DateCreated.Year == date.Year
                                                            && s.DateCreated.Month == date.Month).ToList();
@@ -61,6 +60,7 @@ namespace MyPhamUsa.Services.Implementations
         public StatisticsViewModel GetTotalMoneyFromTo(DateTime from, DateTime to, bool isIssue)
         {
             var transactions = _context.Storages.Where(s => !s.IsDeleted
+                                                            && !s.Product.IsDeleted
                                                             && s.IsIssued == isIssue
                                                             && s.DateCreated >= from.Midnight()
                                                             && s.DateCreated <= to.Latest()).ToList();
@@ -73,6 +73,7 @@ namespace MyPhamUsa.Services.Implementations
             var endOfWeekDate = date.GetDateOfDayOfWeek(DayOfWeek.Sunday);
 
             var transactions = _context.Storages.Where(s => !s.IsDeleted
+                                                           && !s.Product.IsDeleted
                                                            && s.IsIssued == isIssue
                                                            && s.DateCreated >= startOfWeekDate
                                                            && s.DateCreated <= endOfWeekDate
