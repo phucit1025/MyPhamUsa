@@ -44,9 +44,9 @@ namespace MyPhamUsa.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult SearchProducts(string name, int pageSize = 20, int pageIndex = 0)
+        public IActionResult SearchProducts(string name, string code, int pageSize = 20, int pageIndex = 0)
         {
-            var result = _productService.SearchProducts(name, pageSize, pageIndex);
+            var result = _productService.SearchProducts(name, code, pageSize, pageIndex);
             return StatusCode(200, result);
         }
 

@@ -14,6 +14,6 @@ namespace MyPhamUsa.Services.Interfaces
         bool IsAvailableCode(ProductCodeValidViewModel code);
         ProductPagingViewModel GetProducts(int pageSize, int pageIndex);
         ProductPagingViewModel GetProducts(int categoryId, int pageSize, int pageIndex);
-        ProductPagingViewModel SearchProducts(string name, int pageSize, int pageIndex);
+        ProductPagingViewModel SearchProducts(string name, string code, int pageSize, int pageIndex);
     }
 }

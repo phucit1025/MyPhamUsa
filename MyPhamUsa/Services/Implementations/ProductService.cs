@@ -87,6 +87,10 @@ namespace MyPhamUsa.Services.Implementations
                 }
                 return false;
             }
+            finally
+            {
+                transaction.Dispose();
+            }
 
         }
 
@@ -195,6 +199,7 @@ namespace MyPhamUsa.Services.Implementations
 
         private string SaveImage(string base64)
         {
+            base64 = base64.Split(",").ElementAt(1);
             string fileName;
             string imagePath;
             var request = _httpContext.HttpContext.Request;
@@ -287,17 +292,18 @@ namespace MyPhamUsa.Services.Implementations
             return result;
         }
 
-        public ProductPagingViewModel SearchProducts(string name, int pageSize, int pageIndex)
+        public ProductPagingViewModel SearchProducts(string name, string code, int pageSize, int pageIndex)
         {
             var result = new ProductPagingViewModel();
             var allProducts = new List<Product>();
+            if (code.IsNullOrEmpty()) { code = ""; }
             if (!name.IsNullOrEmpty())
             {
-                allProducts = _context.Products.Where(q => !q.IsDeleted && EF.Functions.FreeText(q.Name, name)).ToList();
+                allProducts = _context.Products.Where(q => !q.IsDeleted && EF.Functions.FreeText(q.Name, name)).ToList().Where(p => p.Code.Contains(code, StringComparison.CurrentCultureIgnoreCase)).ToList();
             }
             else
             {
-                allProducts = _context.Products.Where(q => !q.IsDeleted).OrderByDescending(q => q.DateCreated).ToList();
+                allProducts = _context.Products.Where(q => !q.IsDeleted).OrderByDescending(q => q.DateCreated).ToList().Where(p => p.Code.Contains(code, StringComparison.CurrentCultureIgnoreCase)).ToList();
             }
             if (allProducts.Any())
             {
@@ -307,5 +313,6 @@ namespace MyPhamUsa.Services.Implementations
             }
             return result;
         }
+
     }
 }

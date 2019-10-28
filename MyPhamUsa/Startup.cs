@@ -95,7 +95,6 @@ namespace MyPhamUsa
             services.AddAuthorization();
             #endregion
 
-
             services.AddCors(options => options.AddPolicy("AllowAll", builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials()));
             services.AddAutoMapper();
             services.AddSwagger();

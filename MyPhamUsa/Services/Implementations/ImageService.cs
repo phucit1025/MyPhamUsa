@@ -87,6 +87,7 @@ namespace MyPhamUsa.Services.Implementations
 
         private string SaveImage(string base64)
         {
+            base64 = base64.Split(",").ElementAt(1);
             string fileName;
             string imagePath;
             var request = _httpContext.HttpContext.Request;
