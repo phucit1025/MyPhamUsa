@@ -58,7 +58,7 @@ namespace MyPhamUsa.Services.Implementations
                 {
                     Quantity = newProduct.ReceiveQuantity,
                     ProductId = product.Id,
-                    Description = "Nhập kho sản phẩm mới."
+                    Description = "Nhập hàng sản phẩm mới."
                 };
                 _context.Add(storageReceive);
                 _context.SaveChanges();
@@ -202,6 +202,7 @@ namespace MyPhamUsa.Services.Implementations
             base64 = base64.Split(",").ElementAt(1);
             string fileName;
             string imagePath;
+            base64 = base64.Split(",").ElementAt(1);
             var request = _httpContext.HttpContext.Request;
             var url = $"{request.Scheme}://{request.Host}/";
             try
