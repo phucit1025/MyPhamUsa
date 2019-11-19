@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using MyPhamUsa.Services.Interfaces;
 
 namespace MyPhamUsa.Controllers
@@ -24,6 +25,12 @@ namespace MyPhamUsa.Controllers
         public void DeleteCategoryMappings()
         {
             _toolService.DeleteCategoryMappings();
+        }
+
+        [HttpGet]
+        public async Task CreateAdmin(string username,string password)
+        {
+            await _toolService.CreateAdmin(username, password);
         }
     }
 }

@@ -78,7 +78,7 @@ namespace MyPhamUsa.Services.Implementations
 
                 return true;
             }
-            catch (DbUpdateException)
+            catch (Exception e)
             {
                 transaction.Rollback();
                 if (path.IsNullOrEmpty())
@@ -202,7 +202,6 @@ namespace MyPhamUsa.Services.Implementations
             base64 = base64.Split(",").ElementAt(1);
             string fileName;
             string imagePath;
-            base64 = base64.Split(",").ElementAt(1);
             var request = _httpContext.HttpContext.Request;
             var url = $"{request.Scheme}://{request.Host}/";
             try

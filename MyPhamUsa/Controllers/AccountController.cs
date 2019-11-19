@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPhamUsa.Extensions;
 using MyPhamUsa.Models.ViewModels;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 using MyPhamUsa.Services.Interfaces;
 using System.Threading.Tasks;
 
@@ -71,7 +70,6 @@ namespace MyPhamUsa.Controllers
         {
             if (await _accountService.ChangePassword(changePasswordViewModel)) return StatusCode(200);
             return StatusCode(400);
-
         }
 
         [HttpGet]
