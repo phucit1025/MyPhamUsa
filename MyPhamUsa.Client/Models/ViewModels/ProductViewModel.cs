@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MyPhamUsa.Client.Models.ViewModels
 {
@@ -8,7 +7,7 @@ namespace MyPhamUsa.Client.Models.ViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public string Price { get; set; }
-        public string ImagePath { get; set; }
+        public string Image { get; set; }
     }
 
     public class ProductDetailViewModel
@@ -17,6 +16,8 @@ namespace MyPhamUsa.Client.Models.ViewModels
         public string Name { get; set; }
         public string Price { get; set; }
         public string Description { get; set; }
+        public bool IsInStock { get; set; }
+
         public ICollection<ImageViewModel> Images { get; set; }
     }
 }

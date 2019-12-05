@@ -1,22 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MyPhamUsa.Client.Data;
+using MyPhamUsa.Client.Services;
 using NSwag;
+using System;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MyPhamUsa.Client
 {
@@ -55,7 +51,9 @@ namespace MyPhamUsa.Client
             #endregion
 
             #region Register Services
-
+            services.AddScoped<ICategoryService, CategorySerivce>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderService, OrderService>();
             #endregion
 
             #region JWT Config
@@ -97,12 +95,12 @@ namespace MyPhamUsa.Client
                     };
                 });
 
-            
+
 
             services.AddAuthorization();
             #endregion
 
-            services.AddCors(options => options.AddPolicy("AllowAll", builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials()));
+            services.AddCors(options => options.AddPolicy("AllowAll", builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
             services.AddAutoMapper();
             services.AddSwaggerDocument(config =>
                 config.PostProcess = document =>

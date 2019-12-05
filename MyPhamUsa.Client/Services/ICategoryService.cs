@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using MyPhamUsa.Client.Data;
 using MyPhamUsa.Client.Models.Entities;
 using MyPhamUsa.Client.Models.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyPhamUsa.Client.Services
 {
@@ -18,7 +17,7 @@ namespace MyPhamUsa.Client.Services
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public CategorySerivce(AppDbContext dbContext,IMapper mapper)
+        public CategorySerivce(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;

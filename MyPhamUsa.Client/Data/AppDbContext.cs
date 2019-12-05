@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyPhamUsa.Client.Models.Entities;
 
@@ -9,7 +8,8 @@ namespace MyPhamUsa.Client.Data
     {
         public AppDbContext() : base(new DbContextOptionsBuilder()
             .UseLazyLoadingProxies()
-            .UseSqlServer(@"Data Source=45.119.212.145;Initial Catalog=MyPhamUsa_Client;persist security info=True;Integrated Security=False;TrustServerCertificate=False;uid=sa;password=zaq@123;Trusted_Connection=False;MultipleActiveResultSets=true;")
+            //.UseSqlServer(@"Data Source=45.119.212.145;Initial Catalog=MyPhamUsa_Client;persist security info=True;Integrated Security=False;TrustServerCertificate=False;uid=sa;password=zaq@123;Trusted_Connection=False;MultipleActiveResultSets=true;")
+            .UseSqlServer(@"Data Source=.;Initial Catalog=MyPhamUsa_1;persist security info=True;Integrated Security=False;TrustServerCertificate=False;uid=sa;password=123456789;Trusted_Connection=False;MultipleActiveResultSets=true;")
             .Options)
         {
 

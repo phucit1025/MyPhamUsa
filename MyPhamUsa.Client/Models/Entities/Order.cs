@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using MyPhamUsa.Client.Enums;
+﻿using MyPhamUsa.Client.Enums;
+using System.Collections.Generic;
 
 namespace MyPhamUsa.Client.Models.Entities
 {

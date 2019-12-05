@@ -1,5 +1,4 @@
-﻿using System;
-namespace MyPhamUsa.Client.Enums
+﻿namespace MyPhamUsa.Client.Enums
 {
     public enum OrderState
     {

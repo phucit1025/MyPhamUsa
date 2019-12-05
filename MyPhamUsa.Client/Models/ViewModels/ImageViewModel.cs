@@ -1,5 +1,4 @@
-﻿using System;
-namespace MyPhamUsa.Client.Models.ViewModels
+﻿namespace MyPhamUsa.Client.Models.ViewModels
 {
     public class ImageViewModel
     {
